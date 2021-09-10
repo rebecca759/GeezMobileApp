@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geezapp/Comment/blocs/blocs.dart';
 import 'package:geezapp/Lesson/blocs/blocs.dart';
 import 'package:geezapp/Lesson/screens/user/home_screen.dart';
 import 'package:geezapp/enums.dart';
@@ -72,6 +73,14 @@ class _GrammarPageState extends State<GrammarPage> {
                                 BlocProvider.of<LessonBloc>(context).add(
                                   LoadLessonContent(
                                     lessons.elementAt(index),
+                                    
+                                  ),
+                                );
+                                //3
+                                 BlocProvider.of<CommentBloc>(context).add(
+                                  CommentLoad(
+                                    lessons.elementAt(index).lesson_id!,
+                                    
                                   ),
                                 );
                               },

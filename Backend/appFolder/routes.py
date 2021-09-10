@@ -371,7 +371,7 @@ class NewComment(Resource):
 
         db.session.add(new_comment)
         db.session.commit()
-        return new_comment
+        return new_comment, 201
 
 
 class CommentByStatus(Resource):

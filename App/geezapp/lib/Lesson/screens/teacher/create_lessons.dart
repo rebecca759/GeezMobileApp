@@ -53,7 +53,7 @@ class _CreateLessonState extends State<CreateLesson> {
     return BlocBuilder<LessonBloc, LessonState>(
         builder: (ctx, lessonState) {
           if (lessonState is LessonOperationFailure) {
-            return Center(child: Text("ትምህርቱን መጫን ኣልተቻለም"));
+            return Center(child: Text("ትምህርቱን መጫን አልተቻለም"));
           }
           if (lessonState is LessonOperationSuccess) {
             return Center(child: Text("በትክክል ተፈጥሯል"));
