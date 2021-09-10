@@ -52,5 +52,14 @@ class LessonListLoad extends LessonEvent {
   List<Object?> get props => [course_id];
 }
 
+class LessonDelete extends LessonEvent {
+  final int id;
 
+  const LessonDelete(this.id);
 
+  @override
+  List<Object> get props => [id];
+
+  @override
+  toString() => 'Lesson Deleted {lesson Id: $id}';
+}

@@ -19,4 +19,8 @@ class LessonRepository {
   Future<List<Lesson>> fetchLessonsById(int id) async {
     return this.dataProvider.fetchLessonsByCourseId(id);
   }
+  
+  Future<void> delete(int id) async {
+    this.dataProvider.delete(id);
+  }
 }
