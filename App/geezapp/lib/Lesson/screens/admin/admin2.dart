@@ -5,7 +5,9 @@ import 'package:geezapp/Lesson/models/models.dart';
 import 'package:geezapp/Lesson/screens/admin/details.dart';
 import 'package:geezapp/Lesson/screens/admin/details_page_exam.dart';
 import 'package:geezapp/Lesson/screens/admin/details_page_lesson.dart';
-
+import 'package:geezapp/Questions/bloc/question_bloc.dart';
+import 'package:geezapp/Questions/bloc/question_events.dart';
+import 'package:geezapp/Questions/bloc/question_states.dart';
 
 class Admin extends StatefulWidget {
   @override
@@ -35,6 +37,7 @@ class _SimpleAppBarPageState extends State<Admin>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final questionBloc = BlocProvider.of<QuestionBloc>(context);
 
     return DefaultTabController(
       length: 3,
@@ -90,8 +93,8 @@ class _SimpleAppBarPageState extends State<Admin>
                       return Center(
                         child: GestureDetector(
                           onTap: () {
-                            BlocProvider.of<LessonBloc>(context)
-                                .add(LoadLessonContent(lessons.elementAt(index)));
+                            BlocProvider.of<LessonBloc>(context).add(
+                                LoadLessonContent(lessons.elementAt(index)));
                             Navigator.pushNamed(context, DetailPage.routeName);
                           },
                           child: Container(
@@ -153,8 +156,8 @@ class _SimpleAppBarPageState extends State<Admin>
                             color: Color(0xFFB751623),
                           ),
                           onTap: () {
-                            BlocProvider.of<LessonBloc>(context)
-                                .add(LoadLessonContent(lessons.elementAt(index)));
+                            BlocProvider.of<LessonBloc>(context).add(
+                                LoadLessonContent(lessons.elementAt(index)));
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -169,32 +172,110 @@ class _SimpleAppBarPageState extends State<Admin>
               }
               return Container();
             }),
-            ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(12)),
-                      padding: EdgeInsets.all(10.0),
-                      margin: EdgeInsets.all(10.0),
-                      child: ListTile(
-                        leading: Icon(Icons.person_outline),
+
+            /////
+            BlocBuilder<QuestionBloc, QuestionState>(
+                builder: (_, questionState) {
+              if (questionState is LoadOldQuestions) {
+                return CircularProgressIndicator();
+              }
+              if (questionState is QuestionOperationFailure) {
+                return Text("loading qusetion failed");
+              }
+              if (questionState is QuetionOperationSuccess) {
+                final questions = questionState.question;
+                return ListView.builder(
+                  itemCount: questions.length,
+                  itemBuilder: (_, int index) {
+                    return Center(
+                      child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DetailPageExam(index)));
+                          Navigator.pushNamed(
+                              context, DetailPageQuestion.routeName);
                         },
-                        title: Text('ፈተና'),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(12)),
+                          padding: EdgeInsets.all(10.0),
+                          margin: EdgeInsets.all(10.0),
+                          //////////////////////////
+                          // needs a gesture detectotr to open the update UI
+                          // and pass the question by creating an event
+                          // fetch the quetion again and pass it
+                          /////////////////////////
+                          child: ListTile(
+                              title: Text(
+                                  '${questions.elementAt(index).question}'),
+                              subtitle: Text(
+                                  'ደረጃ : ${questions.elementAt(index).level_id}'),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  // BlocProvider.of<QuestionBloc>(context).add(
+                                  //     DeleteQuestion(questions
+                                  //         .elementAt(index)
+                                  //         .question_id));
+                                },
+                              )),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                itemCount: 10),
+                    );
+                  },
+                );
+              }
+              return Container();
+            })
+
+            ///
+            // BlocBuilder<LessonBloc, LessonState>(builder: (_, lessonState) {
+            //   if (lessonState is LessonLoading) {
+            //     return SizedBox(
+            //         height: 10, width: 10, child: CircularProgressIndicator());
+            //   }
+            //   if (lessonState is LessonOperationSuccess) {
+            //     final lessons = lessonState.lessons;
+            //     return ListView.builder(
+            //       itemCount: lessons.length,
+            //       itemBuilder: (BuildContext context, int index) {
+            //         return Center(
+            //           child: Container(
+            //             decoration: BoxDecoration(
+            //                 border: Border.all(
+            //                   color: Colors.grey,
+            //                   width: 1,
+            //                 ),
+            //                 borderRadius: BorderRadius.circular(12)),
+            //             padding: EdgeInsets.all(10.0),
+            //             margin: EdgeInsets.all(10.0),
+            //             child: ListTile(
+            //               title: Text('${lessons.elementAt(index).lessonName}'),
+            //               subtitle: Text(
+            //                   'የአስተማሪ ስም : ${lessons.elementAt(index).teacher_name}'),
+            //               trailing: Icon(
+            //                 Icons.delete,
+            //                 color: Color(0xFFB751623),
+            //               ),
+            //               onTap: () {
+            //                 BlocProvider.of<LessonBloc>(context)
+            //                     .add(LoadLessonContent(lessons.elementAt(index)));
+            //                 Navigator.push(
+            //                     context,
+            //                     MaterialPageRoute(
+            //                         builder: (context) =>
+            //                             DetailPagelesson(index)));
+            //               },
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     );
+            //   }
+            //   return Container();
+            // }),
           ],
         ),
       ),
