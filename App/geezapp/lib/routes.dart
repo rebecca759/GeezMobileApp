@@ -3,19 +3,19 @@ import 'package:geezapp/Exam/screens/quiz/quiz_screen.dart';
 import 'package:geezapp/Lesson/screens/admin/AdminMain.dart';
 import 'package:geezapp/Lesson/screens/admin/admin_login.dart';
 import 'package:geezapp/Lesson/screens/admin/details.dart';
+import 'package:geezapp/profile/Profile_edit/screens/profile_edit.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
-import 'package:geezapp/User/screens/welcome_screen.dart';
 import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
 import 'package:geezapp/Lesson/screens/user/GrammarPage.dart';
 import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
 import 'package:geezapp/Lesson/screens/user/Courses2.dart';
 import 'package:geezapp/Lesson/screens/user/home_screen.dart';
 import 'package:geezapp/login/screens/login.dart';
-import 'package:geezapp/User/screens/profile_edit.dart';
 import 'package:geezapp/Lesson/screens/teacher/create_lessons.dart';
 import 'package:geezapp/Lesson/screens/teacher/create_test.dart';
 import 'package:geezapp/Lesson/screens/teacher/teacher_create.dart';
 import 'package:geezapp/Lesson/screens/teacher/teacher_home.dart';
+import 'package:geezapp/profile/welcome_screen.dart';
 
 import 'Lesson/screens/admin/details_page_exam.dart';
 import 'login/login_auth.dart';
@@ -34,7 +34,7 @@ class AppRoute {
     Courses2.routeName: (BuildContext context) => Courses2(),
     GrammarPage.routeName: (BuildContext context) => GrammarPage(),
     HomeScreen.routeName: (BuildContext context) => HomeScreen(),
-    ProfileEdit.routeName: (BuildContext context) => ProfileEdit(),
+    ProfileEditW.routeName: (BuildContext context) => ProfileEditW(),
     AdminLoginScreen.routeName: (BuildContext context) => AdminLoginScreen(),
     MainPage.routeName: (BuildContext context) => MainPage(
           title: 'አድሚን',
