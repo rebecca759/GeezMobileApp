@@ -145,6 +145,18 @@ exam_fields = {
 
 #signin or login
 
+
+class UseSignIn(Resource):
+    def post(self):
+        email = request.json['email']
+        password = request.json['password']
+        result = User.query.filter_by(email=email).first()
+        if result:
+            if result.password == password:
+                return {"message": "login", "user_id": str(result.user_id), "email": result.email, "password": result.password, "firstName": result.firstName}
+        return {"message": "not login", "user_id": "", "email": "", "password": "", "firstName": ""}
+
+
 #signup or register
 
 
@@ -214,13 +226,13 @@ class LessonResource(Resource):
             result2 = User.query.filter_by(user_id=item.teacher_id).first()
             if result2:
                 return_json = {'lesson_id': item.lesson_id,
-                           'lessonName': item.lessonName,
-                           'level_id': item.level_id,
-                           'course_id': item.course_id,
-                           'content': item.content,
-                           'status': item.status,
-                           'teacher_id': item.teacher_id,
-                           'teacher_name': result2.firstName}
+                               'lessonName': item.lessonName,
+                               'level_id': item.level_id,
+                               'course_id': item.course_id,
+                               'content': item.content,
+                               'status': item.status,
+                               'teacher_id': item.teacher_id,
+                               'teacher_name': result2.firstName}
             final_res.append(return_json)
 
         return final_res
@@ -259,6 +271,7 @@ class LessonByIdResource(Resource):
 
         db.session.commit()
         return lesson
+
 
 class QuestionResource(Resource):
     @marshal_with(question_fields)
@@ -379,6 +392,7 @@ class CourseResource (Resource):
         if result:
             return result
         return "level id not found"
+
 
 class LessonResourceElda(Resource):
     @marshal_with(lesson_fields)
@@ -508,6 +522,7 @@ class PostTeacherTest(Resource):
 
 # class for user's get test endpoints
 
+
 class GetTest(Resource):
     def get(self, id):
         result1 = Question.query.filter_by(user_id=id).first()
@@ -549,6 +564,7 @@ class Exam(Resource):
 
         return new_exam
 
+
 class GetAllUser(Resource):
     @marshal_with(resource_fields)
     def get(self):
@@ -556,6 +572,7 @@ class GetAllUser(Resource):
         if result:
             return result
         return "user not found"
+
 
 api.add_resource(UseSignIn, "/api/v1/user/login")
 api.add_resource(UserSignUp,  "/api/v1/user/register")
@@ -581,5 +598,6 @@ api.add_resource(GetTeacherTest, "/api/v1/question/<int:id>")
 api.add_resource(PostTeacherTest, "/api/v1/question")
 api.add_resource(GetTest, "/api/v1/question/choice/<int:id>")
 api.add_resource(Exam, "/api/v1/exam")
+
 
 
