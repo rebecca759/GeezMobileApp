@@ -5,6 +5,7 @@ import '../../controllers/question_controller.dart';
 import 'components/body.dart';
 
 class QuizScreen extends StatelessWidget {
+  static const String routeName = '/quiz';
   @override
   Widget build(BuildContext context) {
     QuestionController _controller = Get.put(QuestionController());

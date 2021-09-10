@@ -29,3 +29,13 @@ class LessonLoadSuccess extends LessonState {
   @override
   List<Object> get props => [lesson];
 }
+
+
+class LessonContentOperationSuccess extends LessonState {
+  final String lessonContent;
+
+  LessonContentOperationSuccess([this.lessonContent = ""]);
+
+  @override
+  List<Object> get props => [lessonContent];
+}

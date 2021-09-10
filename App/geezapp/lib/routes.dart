@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geezapp/Exam/screens/quiz/quiz_screen.dart';
 import 'package:geezapp/Lesson/screens/admin/AdminMain.dart';
 import 'package:geezapp/Lesson/screens/admin/admin_login.dart';
 import 'package:geezapp/Lesson/screens/admin/details.dart';
@@ -20,7 +21,7 @@ import 'login/login_auth.dart';
 import 'login/repository/login.dart';
 
 class AppRoute {
-  static const initialRoute = MainPage.routeName;
+  static const initialRoute = UserHomePage.routeName;
 
   static final routes = {
     WelcomeScreen.routeName: (BuildContext context) => WelcomeScreen(),
@@ -39,6 +40,8 @@ class AppRoute {
     TeacherHome.routeName: (BuildContext context) => TeacherHome(),
     TeacherCreate.routeName: (BuildContext context) => TeacherCreate(),
     CreateLessonApp.routeName: (BuildContext context) => CreateLessonApp(),
-    CreateTestApp.routeName: (BuildContext context) => CreateTestApp()
+    CreateTestApp.routeName: (BuildContext context) => CreateTestApp(),
+    QuizScreen.routeName: (BuildContext context) => QuizScreen(),
+
   };
 }

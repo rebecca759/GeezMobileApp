@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geezapp/Lesson/blocs/blocs.dart';
 import 'package:geezapp/Lesson/screens/user/home_screen.dart';
 import 'package:geezapp/enums.dart';
+import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
 import 'package:get/get.dart';
 
 class GrammarPage extends StatefulWidget {
@@ -50,143 +52,58 @@ class _GrammarPageState extends State<GrammarPage> {
                     ],
                   )),
               Container(
-                height: 520,
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    Container(
-                        height: 75,
-                        margin: EdgeInsets.only(top: 10, left: 5),
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(240, 248, 255, 1),
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Color.fromRGBO(211, 211, 211, 1)))),
-                        child: Row(
-                          children: [
-                            Icon(Icons.play_arrow),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, HomeScreen.routeName);
-                              }, 
-                              child: Container(
-                                child: Align(
-                                  child: Text(
-                                    '   መግቢያ',
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
-                    Container(
-                        height: 75,
-                        margin: EdgeInsets.only(top: 10, left: 5),
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(240, 248, 255, 1),
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Color.fromRGBO(211, 211, 211, 1)))),
-                        child: Row(
-                          children: [
-                            Icon(Icons.play_arrow),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                child: Align(
-                                  child: Text(
-                                    '   ፊደላት',
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
-                    Container(
-                        height: 75,
-                        margin: EdgeInsets.only(top: 10, left: 5),
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(240, 248, 255, 1),
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Color.fromRGBO(211, 211, 211, 1)))),
-                        child: Row(
-                          children: [
-                            Icon(Icons.play_arrow),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                child: Align(
-                                  child: Text(
-                                    '   ቃላት',
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
-                    Container(
-                        height: 75,
-                        margin: EdgeInsets.only(top: 10, left: 5),
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(240, 248, 255, 1),
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Color.fromRGBO(211, 211, 211, 1)))),
-                        child: Row(
-                          children: [
-                            Icon(Icons.play_arrow),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                child: Align(
-                                  child: Text(
-                                    '   መግቢያ',
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
-                    Container(
-                        height: 75,
-                        margin: EdgeInsets.only(top: 10, left: 5),
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(240, 248, 255, 1),
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Color.fromRGBO(211, 211, 211, 1)))),
-                        child: Row(
-                          children: [
-                            Icon(Icons.play_arrow),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                child: Align(
-                                  child: Text(
-                                    '   መግቢያ',
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ))
-                  ],
-                ),
-              )
+                  height: 520,
+                  child:
+                      BlocBuilder<LessonBloc, LessonState>(builder: (_, state) {
+                    if (state is LessonOperationFailure) {
+                      return Text('Could not do lesson operation');
+                    }
+                    if (state is LessonOperationSuccess) {
+                      final lessons = state.lessons;
+                      print(lessons);
+                      return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: lessons.length,
+                          itemBuilder: (_, index) {
+                            return Container(
+                                height: 75,
+                                margin: EdgeInsets.only(top: 10, left: 5),
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(240, 248, 255, 1),
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Color.fromRGBO(
+                                                211, 211, 211, 1)))),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.play_arrow),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, HomeScreen.routeName);
+                                      },
+                                      child: Container(
+                                        child: Align(
+                                          child: Text(
+                                            lessons.elementAt(index).lessonName,
+                                            style: TextStyle(fontSize: 25),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ));
+                          });
+                    }
+                    return CircularProgressIndicator();
+                  }))
             ],
           ),
         ),
       ),
       bottomNavigationBar: CustomNavBar(
+        utype: 'user',
         selectedMenu: MenuState.lessons,
-        utype: 'user'
       ),
     );
   }
