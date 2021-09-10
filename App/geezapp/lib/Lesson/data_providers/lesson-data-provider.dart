@@ -39,11 +39,13 @@ class LessonDataProvider {
   }
 
   Future<Lesson> update(int id, Lesson lesson) async {
-    final response = await http.put(
+    final response = await http.patch(
       Uri.parse("$_baseUrl/lessons/$id"),
       headers: <String, String>{"Content-Type": "application/json"},
       body: jsonEncode(
-        {"content": lesson.content},
+        {"content": lesson.content,
+        "status": lesson.status,
+        },
       ),
     );
 
@@ -62,6 +64,13 @@ class LessonDataProvider {
       return lessons.map((c) => Lesson.fromJson(c)).toList();
     } else {
       throw Exception("Couldn't fetch lessons");
+    }
+  }
+
+  Future<void> delete(int id) async {
+    final response = await http.delete(Uri.parse("$_baseUrl/lessons/$id"));
+    if (response.statusCode != 204) {
+      throw Exception("Field to delete the course");
     }
   }
 }
