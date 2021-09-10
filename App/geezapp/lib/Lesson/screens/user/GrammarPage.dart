@@ -65,34 +65,53 @@ class _GrammarPageState extends State<GrammarPage> {
                           scrollDirection: Axis.vertical,
                           itemCount: lessons.length,
                           itemBuilder: (_, index) {
-                            return Container(
-                                height: 75,
-                                margin: EdgeInsets.only(top: 10, left: 5),
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(240, 248, 255, 1),
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Color.fromRGBO(
-                                                211, 211, 211, 1)))),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.play_arrow),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, HomeScreen.routeName);
-                                      },
-                                      child: Container(
-                                        child: Align(
-                                          child: Text(
-                                            lessons.elementAt(index).lessonName,
-                                            style: TextStyle(fontSize: 25),
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, HomeScreen.routeName);
+                                BlocProvider.of<LessonBloc>(context).add(
+                                  LoadLessonContent(
+                                    lessons.elementAt(index),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                  height: 75,
+                                  margin: EdgeInsets.only(top: 10, left: 5),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(240, 248, 255, 1),
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: Color.fromRGBO(
+                                                  211, 211, 211, 1)))),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.play_arrow),
+                                      GestureDetector(
+                                        onTap: () {
+                                          BlocProvider.of<LessonBloc>(context)
+                                              .add(
+                                            LoadLessonContent(
+                                              lessons.elementAt(index),
+                                            ),
+                                          );
+                                          Navigator.pushNamed(
+                                              context, HomeScreen.routeName);
+                                        },
+                                        child: Container(
+                                          child: Align(
+                                            child: Text(
+                                              lessons
+                                                  .elementAt(index)
+                                                  .lessonName,
+                                              style: TextStyle(fontSize: 25),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                ));
+                                      )
+                                    ],
+                                  )),
+                            );
                           });
                     }
                     return CircularProgressIndicator();
