@@ -22,6 +22,10 @@ import 'Auth/auth_state.dart';
 import 'Comment/data_providers/comment-data-provider.dart';
 import 'Coursenew/blocs/course_bloc.dart';
 import 'Lesson/blocs/lesson_bloc.dart';
+import 'Questions/Repository/question_repository.dart';
+import 'Questions/bloc/question_bloc.dart';
+import 'Questions/bloc/question_events.dart';
+import 'Questions/data_providers/question_data_provider.dart';
 import 'login/screens/login.dart';
 import 'package:geezapp/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,6 +66,7 @@ void main() async {
   final courseRepository = CourseRepository(CourseDataProvider());
   final profileScreenRepository =
       ProfileScreenRepository(dataProvider: ProfileScreenDataProvider());
+  final questRepository = QuestionRepository(QuestionDataProvider());
   runApp(
     MultiBlocProvider(
       providers: [
@@ -86,6 +91,10 @@ void main() async {
                 profileScreenRepository: profileScreenRepository)),
         BlocProvider(
             create: (ctx) => SignupBloc(signupRepository: signupRepository)),
+
+        BlocProvider(
+            create: (ctx) => QuestionBloc(questionRepository: questRepository)
+              ..add(LoadQuestionsById(1))),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

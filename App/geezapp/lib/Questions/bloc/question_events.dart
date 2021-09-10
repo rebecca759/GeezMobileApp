@@ -19,12 +19,12 @@ class CreateQuestion extends QuestionEvents {
 
 // event for loading question from specfic teacher
 class LoadQuestionsById extends QuestionEvents {
-  final Questions question;
+  final int Id;
 
-  const LoadQuestionsById(this.question);
+  const LoadQuestionsById(this.Id);
 
   @override
-  List<Object> get props => [question];
+  List<Object> get props => [this.Id];
 }
 
 // event for loading new question
