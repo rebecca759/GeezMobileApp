@@ -11,8 +11,8 @@ class QuestionRepository {
   }
 
   // fetch questions by Id
-  Future<List<Questions>> fetch(Questions quest, int Id) async {
-    return this.dataProvider.fetchById(quest, Id);
+  Future<List<Questions>> fetch(int Id) async {
+    return this.dataProvider.fetchById(Id);
   }
 
   // fetch questions by status

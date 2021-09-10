@@ -1,10 +1,10 @@
 class Questions {
-  final int question_id;
+  final int? question_id;
   final String question;
   final int level_id;
   final int user_id;
   final String status;
-  final int Question_id;
+  final int? Question_id;
   final String choice_1;
   final String choice_2;
   final String choice_3;
@@ -12,12 +12,12 @@ class Questions {
   final String answer;
 
   Questions({
-    required this.question_id,
+    this.question_id,
     required this.question,
     required this.level_id,
     required this.user_id,
     required this.status,
-    required this.Question_id,
+    this.Question_id,
     required this.choice_1,
     required this.choice_2,
     required this.choice_3,

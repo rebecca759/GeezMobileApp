@@ -20,3 +20,21 @@ class QuetionOperationSuccess extends QuestionState {
 }
 
 class QuestionOperationFailure extends QuestionState {}
+
+class QuestionLoadSuccess extends QuestionState {
+  final Questions question;
+
+  QuestionLoadSuccess(this.question);
+
+  @override
+  List<Object> get props => [question];
+}
+
+class QuestionContentOperationSuccess extends QuestionState {
+  final String questionContent;
+
+  QuestionContentOperationSuccess([this.questionContent = ""]);
+
+  @override
+  List<Object> get props => [questionContent];
+}

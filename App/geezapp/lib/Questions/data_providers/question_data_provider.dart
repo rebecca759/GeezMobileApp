@@ -10,7 +10,7 @@ class QuestionDataProvider {
   static final _gedeup_Url =
       "http://127.0.0.1:5000/api/v1/questions"; // a variable for get, delete and update
   static final _get_Url = "/api/v1/question/choice";
-  static final _post_Url = "/api/v1/question";
+  static final _post_Url = "http://127.0.0.1:5000/api/v1/question";
   //static final _getAll_Url = "/api/v1/questions";
 
   // post a question
@@ -39,8 +39,8 @@ class QuestionDataProvider {
   }
 
   //  fetch by teacher's id
-  Future<List<Questions>> fetchById(Questions quest, int Id) async {
-    final response = await http.get(Uri.parse('$_gedeup_Url/$Id'));
+  Future<List<Questions>> fetchById(int Id) async {
+    final response = await http.get(Uri.parse('$_post_Url/$Id'));
     if (response.statusCode == 200) {
       final questions = jsonDecode(response.body) as List;
       return questions.map((c) => Questions.fromJson(c)).toList();

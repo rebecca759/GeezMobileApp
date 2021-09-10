@@ -14,8 +14,7 @@ class QuestionBloc extends Bloc<QuestionEvents, QuestionState> {
     if (event is LoadQuestionsById) {
       yield QuestionLoading();
       try {
-        final questions = await questionRepository.fetch(
-            event.question, event.question.user_id);
+        final questions = await questionRepository.fetch(event.Id);
         yield QuetionOperationSuccess(questions);
       } catch (_) {
         yield QuestionOperationFailure();
@@ -55,7 +54,7 @@ class QuestionBloc extends Bloc<QuestionEvents, QuestionState> {
     if (event is UpdateQuestion) {
       try {
         await questionRepository.update(
-            event.question.question_id, event.question);
+            event.question.question_id ?? 0, event.question);
         final questions = await questionRepository.fetchOld();
         yield QuetionOperationSuccess(questions);
       } catch (_) {
