@@ -49,5 +49,16 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
         yield LessonOperationFailure();
       }
     }
+    if (event is LessonListLoad) {
+      yield LessonLoading();
+      try {
+        final lessons =
+            await lessonRepository.fetchLessonsById(event.course_id);
+        yield LessonOperationSuccess(lessons);
+      } catch (error) {
+        print(error);
+        yield LessonOperationFailure();
+      }
+    }
   }
 }

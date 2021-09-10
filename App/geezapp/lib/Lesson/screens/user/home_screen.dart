@@ -6,10 +6,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String prevVal = "";
+  String currentval = "wer";
+
+  void changedata() {
+    setState(() {
+      this.prevVal = currentval;
+      this.currentval = "polikmujnhybgfvcdduynhbtgv";
+    });
+  }
+
+  void changedata1() {
+    setState(() {
+      this.currentval = this.prevVal;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: Column(
+            child: ListView(
       children: <Widget>[
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -61,10 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Text(
-              '''44 24 I am trying to achieve a very common behavior nowadays which is to have a horizontal List within another widget that is at the same time scrollable. Think something like the home screen of the IMDb app: enter image description here So I want to have a widget that scrolls vertically with few items on them. At the top of it, there should be a horizontal ListView, followed up with some items called motivationCard. There are some headers in between the list and the cards as well.
-I got something like this on my Widget:44 24 I am trying to achieve a very common behavior nowadays which is to have a horizontal List within another widget that is at the same time scrollable. Think something like the home screen of the IMDb app: enter image description here So I want to have a widget that scrolls vertically with few items on them. At the top of it, there should be a horizontal ListView, followed up with some items called motivationCard. There are some headers in between the list and the cards as well.
-I got something like this on my Widget:44 24 I am trying to achieve a very common behavior nowadays which is to have a horizontal List within another widget that is at the same time scrollable. Think something like the home screen of the IMDb app: enter image description here So I want to have a widget that scrolls vertically with few items on them. At the top of it, there should be a horizontal ListView, followed up with some items called motivationCard. There are some headers in between the list and the cards as well.
-I got something like this on my Widget:''',
+              "$currentval",
               style: TextStyle(fontSize: 23, height: 1.2),
             ),
           ),
@@ -74,7 +87,7 @@ I got something like this on my Widget:''',
             children: <Widget>[
               Container(
                   child: ElevatedButton(
-                onPressed: () {},
+                onPressed: changedata1,
                 child: Text('ተመለስ'),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -84,7 +97,7 @@ I got something like this on my Widget:''',
               )),
               Container(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: changedata,
                   child: Text('ቀጣይ'),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

@@ -53,4 +53,15 @@ class LessonDataProvider {
       throw Exception("Could not update the lesson");
     }
   }
+
+  Future<List<Lesson>> fetchLessonsByCourseId(int id) async {
+    final response = await http.get(Uri.parse('$_baseUrl/courses/lessons/$id'));
+
+    if (response.statusCode == 200) {
+      final lessons = jsonDecode(response.body) as List;
+      return lessons.map((c) => Lesson.fromJson(c)).toList();
+    } else {
+      throw Exception("Couldn't fetch lessons");
+    }
+  }
 }

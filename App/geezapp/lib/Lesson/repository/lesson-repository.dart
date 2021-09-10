@@ -15,4 +15,8 @@ class LessonRepository {
    Future<Lesson> updateLesson(int id, Lesson lesson) async {
     return this.dataProvider.update(id, lesson);
   }
+
+  Future<List<Lesson>> fetchLessonsById(int id) async {
+    return this.dataProvider.fetchLessonsByCourseId(id);
+  }
 }

@@ -44,3 +44,13 @@ class LessonUpdate extends LessonEvent {
   String toString() => 'Lesson Updated {lesson: $lesson}';
 }
 
+class LessonListLoad extends LessonEvent {
+  final int course_id;
+  const LessonListLoad({required this.course_id});
+
+  @override
+  List<Object?> get props => [course_id];
+}
+
+
+
