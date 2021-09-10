@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../profile.dart';
+import '../profile_screen.dart';
 
 abstract class ProfileScreenEvent extends Equatable {
   const ProfileScreenEvent();

@@ -11,7 +11,7 @@ import 'package:geezapp/enums.dart';
 import 'package:geezapp/login/repository/login.dart';
 import 'package:geezapp/main.dart';
 import 'package:geezapp/profile/profile_screen/bloc/profile_screen_bloc.dart';
-import 'package:geezapp/profile/profile_screen/profile.dart';
+import 'package:geezapp/profile/profile_screen/profile_screen.dart';
 import 'package:geezapp/Lesson/screens/teacher/teacher_create.dart';
 import 'package:geezapp/Lesson/screens/teacher/teacher_home.dart';
 import 'package:http/http.dart' as http;
@@ -256,6 +256,7 @@ class _StateProfileScreen extends State<ProfileScreen> {
                   LoggedOut(),
                 );
                 logOut(context);
+                Navigator.pushNamed(context, LoginScreen.routeName);
               },
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -283,7 +284,8 @@ class _StateProfileScreen extends State<ProfileScreen> {
         ],
       ),
       bottomNavigationBar: CustomNavBar(
-        selectedMenu: MenuState.profile, utype: 'teacher',
+        selectedMenu: MenuState.profile,
+        utype: 'teacher',
       ),
     );
   }
