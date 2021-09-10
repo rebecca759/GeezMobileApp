@@ -60,5 +60,16 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
         yield LessonOperationFailure();
       }
     }
+        if (event is LessonDelete) {
+      try {
+        await lessonRepository.delete(event.id);
+        final lessons = await lessonRepository.fetchLessons('approved');
+        yield LessonOperationSuccess(lessons);
+      } catch (_) {
+        yield LessonOperationFailure();
+      }
+    }
+
+    
   }
 }

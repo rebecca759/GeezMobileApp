@@ -20,6 +20,16 @@ class AdminLoginScreen extends StatelessWidget {
     );
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(4),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.logout))
+        ],
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -57,8 +67,7 @@ class AdminLoginScreen extends StatelessWidget {
                   validator: (String? password) {
                     if (password!.length < 8) {
                       return "የይለፍ ቃል አጥሯል";
-                    }
-                    else if (password != adminPass) {
+                    } else if (password != adminPass) {
                       return "የተሳሳተ የይለፍ ቃል";
                     }
 
