@@ -1,6 +1,9 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geezapp/Comment/blocs/comment_bloc.dart';
+import 'package:geezapp/Comment/data_providers/comment-data-provider.dart';
+import 'package:geezapp/Comment/repository/comment-repository.dart';
 import 'package:geezapp/Lesson/data_providers/lesson-data-provider.dart';
 import 'package:geezapp/Lesson/repository/lesson-repository.dart';
 import 'package:geezapp/profile/signup/bloc/signup_bloc.dart';
@@ -48,6 +51,8 @@ void main() async {
   Bloc.observer = SimpleBlocDelegate();
 
   final userRepository = UserRepository();
+  //1
+  final commentRepository = CommentRepository(CommentDataProvider());
   final signupRepository = SignupRepository(dataProvider: SignupDataProvider());
   final lessonRepository = LessonRepository(LessonDataProvider());
   final profileScreenRepository =
@@ -55,6 +60,10 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        //2
+        BlocProvider(
+          create: (ctx) => CommentBloc(commentRepository: commentRepository),
+        ),
         BlocProvider(
           create: (ctx) => LessonBloc(lessonRepository: lessonRepository),
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geezapp/Comment/blocs/blocs.dart';
+import 'package:geezapp/Comment/models/comment.dart';
 import 'package:geezapp/Lesson/blocs/blocs.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +10,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //e1
+  final _formKey = GlobalKey<FormState>();
+
+  final Map<String, dynamic> _comment = {};
   String prevVal = "";
   String currentval = "wer";
 
@@ -33,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (state is LessonLoadSuccess) {
         final String content = state.lesson.content;
         return ListView(
+          scrollDirection: Axis.vertical,
           children: <Widget>[
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,7 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: EdgeInsets.only(right: 60),
                           child: IconButton(
                               onPressed: () {
-                                BlocProvider.of<LessonBloc>(context).add(LessonListLoad(course_id: state.lesson.course_id));
+                                BlocProvider.of<LessonBloc>(context).add(
+                                    LessonListLoad(
+                                        course_id: state.lesson.course_id));
                                 Navigator.pop(context);
                               },
                               icon: Icon(Icons.arrow_back)),
@@ -116,6 +125,86 @@ class _HomeScreenState extends State<HomeScreen> {
             //         ),
             //       ),
             //     ]),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(top: 10),
+                      width: 300,
+                      decoration:
+                          BoxDecoration(border: Border.all(color: Colors.grey)),
+                      child: TextFormField(
+                        onSaved: (val) {
+                          this._comment["comment"] = val;
+                        },
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                            border: InputBorder.none, hintText: '   አስተያየት'),
+                      )),
+                  Container(
+                      margin: EdgeInsets.only(top: 5, left: 250),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          final form = _formKey.currentState;
+                          if (form != null && form.validate()) {
+                            form.save();
+                            final CommentEvent event = CommentCreate(Comment(
+                                lesson_id: state.lesson.lesson_id!,
+                                comment: this._comment["comment"],
+                                status: "pending",
+                                user_id: 1));
+                            BlocProvider.of<CommentBloc>(context).add(event);
+                          }
+                        },
+                        child: Text('ላክ'),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            primary: Color(0xFFe39b9b)),
+                      )),
+                ],
+              ),
+            ),
+
+//4
+            BlocBuilder<CommentBloc, CommentState>(builder: (_, state) {
+              if (state is CommentOperationSuccess) {
+                return Column(
+                  children: [
+                    Container(child: Text("አስተያየቶች")),
+                    Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: Color.fromRGBO(0, 0, 0, 0.5)),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        children: [
+                          ...state.comments.map(
+                            (c) => Container(
+                              padding: EdgeInsets.only(top: 5, bottom: 5),
+                              margin: EdgeInsets.only(bottom: 3),
+                              width: 300,
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(220, 220, 220, 0.5),
+                                  border: Border(
+                                      bottom: BorderSide(color: Colors.grey))),
+                              child: Text('   ${c.comment}'),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+              if (state is CommentOperationFailure) {
+                return Text("couldn't load comments");
+              }
+
+              return Container();
+            }),
           ],
         );
       }

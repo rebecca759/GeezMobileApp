@@ -22,10 +22,11 @@ import 'login/repository/login.dart';
 
 class AppRoute {
   static const initialRoute = UserHomePage.routeName;
-
   static final routes = {
     WelcomeScreen.routeName: (BuildContext context) => WelcomeScreen(),
-    LoginScreen.routeName: (BuildContext context) => LoginScreen(userRepository: UserRepository(),),
+    LoginScreen.routeName: (BuildContext context) => LoginScreen(
+          userRepository: UserRepository(),
+        ),
     SignUpScreen.routeName: (BuildContext context) => SignUpScreen(),
     ProfileScreen.routeName: (BuildContext context) => ProfileScreen(),
     UserHomePage.routeName: (BuildContext context) => UserHomePage(),
@@ -34,14 +35,17 @@ class AppRoute {
     HomeScreen.routeName: (BuildContext context) => HomeScreen(),
     ProfileEdit.routeName: (BuildContext context) => ProfileEdit(),
     AdminLoginScreen.routeName: (BuildContext context) => AdminLoginScreen(),
-    MainPage.routeName: (BuildContext context) => MainPage(title: 'አድሚን',),
-    LoginAuth.routeName: (BuildContext context) => LoginAuth(userRepository: UserRepository(),),
+    MainPage.routeName: (BuildContext context) => MainPage(
+          title: 'አድሚን',
+        ),
+    LoginAuth.routeName: (BuildContext context) => LoginAuth(
+          userRepository: UserRepository(),
+        ),
     DetailPage.routeName: (BuildContext context) => DetailPage(),
     TeacherHome.routeName: (BuildContext context) => TeacherHome(),
     TeacherCreate.routeName: (BuildContext context) => TeacherCreate(),
     CreateLessonApp.routeName: (BuildContext context) => CreateLessonApp(),
     CreateTestApp.routeName: (BuildContext context) => CreateTestApp(),
     QuizScreen.routeName: (BuildContext context) => QuizScreen(),
-
   };
 }
