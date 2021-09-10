@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './bloc.dart';
-import '../profile.dart';
+import '../profile_screen.dart';
 
 class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
   final ProfileScreenRepository profileScreenRepository;

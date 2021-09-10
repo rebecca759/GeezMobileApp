@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../profile.dart';
+import '../profile_screen.dart';
 
 class ProfileScreenState extends Equatable {
   const ProfileScreenState();

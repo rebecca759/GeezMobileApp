@@ -120,7 +120,7 @@ class SignUpScreen extends StatelessWidget {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                     icon: Icon(
-                                      Icons.mail,
+                                      Icons.person,
                                       color: Color(0xFFB77415A),
                                     ),
                                     hintText: "ኢሜል",
