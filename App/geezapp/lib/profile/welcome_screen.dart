@@ -44,7 +44,6 @@ class WelcomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
               Container(
                 child: GestureDetector(
                   onTap: () {

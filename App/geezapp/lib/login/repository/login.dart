@@ -32,12 +32,10 @@ class UserRepository {
       "email": phone,
       "password": password,
     });
-     SharedPreferences sharedPreferences =
-                                await SharedPreferences.getInstance();
-                            sharedPreferences.setString(
-                                'email', response.data["email"]);
-                            sharedPreferences.setString(
-                                "user_id", response.data["user_id"]);
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('email', response.data["email"]);
+    sharedPreferences.setString("user_id", response.data["user_id"]);
+    sharedPreferences.setString("firstName", response.data["firstName"]);
 
     return response.data["user_id"];
   }

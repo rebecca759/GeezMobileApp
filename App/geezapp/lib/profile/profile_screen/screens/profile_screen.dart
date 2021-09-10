@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geezapp/Auth/auth_bloc.dart';
 import 'package:geezapp/Auth/auth_event.dart';
 import 'package:geezapp/login/screens/login.dart';
-import 'package:geezapp/User/screens/profile_edit.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_bloc.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_event.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_state.dart';
+import 'package:geezapp/profile/Profile_edit/screens/profile_edit.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
 import 'package:geezapp/Lesson/screens/user/Courses2.dart';
 import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
@@ -34,15 +37,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _StateProfileScreen extends State<ProfileScreen> {
-  late Future<Album> _futureAlbum;
   String email = "";
   String id = "";
+  String firstName = "";
 
   Future getEmail() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       email = preferences.getString('email')!;
       id = preferences.getString('user_id')!;
+      firstName = preferences.getString('firstName')!;
     });
   }
 
@@ -50,13 +54,13 @@ class _StateProfileScreen extends State<ProfileScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove('email');
     preferences.remove('user_id');
+    preferences.remove('firstName');
   }
 
   @override
   void initState() {
     super.initState();
     getEmail();
-    _futureAlbum = fetchAlbum();
   }
 
   @override
@@ -127,7 +131,7 @@ class _StateProfileScreen extends State<ProfileScreen> {
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: 10),
             child: Text(
-              "ሙሉ ስም",
+              '$firstName',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
           ),
@@ -173,7 +177,7 @@ class _StateProfileScreen extends State<ProfileScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileEdit()),
+                  MaterialPageRoute(builder: (context) => ProfileEditW()),
                 );
               },
               child: Row(
@@ -380,6 +384,9 @@ class CustomNavBar extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
+                    final profileEditBloc =
+                        BlocProvider.of<ProfileEditBloc>(context);
+                    profileEditBloc.add(ProfileEditLoad());
                     Navigator.push(
                         context,
                         new MaterialPageRoute(
