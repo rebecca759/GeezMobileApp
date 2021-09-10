@@ -10,6 +10,7 @@ import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
 import 'package:geezapp/Lesson/screens/user/GrammarPage.dart';
 import 'package:geezapp/Lesson/screens/user/home_screen.dart';
 import 'package:geezapp/enums.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserHomePage extends StatefulWidget {
   static const String routeName = '/userhome';
@@ -17,14 +18,27 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
+  String email = "";
+  String id = "";
+  String firstName = "";
+
+  Future getUserName() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      email = preferences.getString('email')!;
+      id = preferences.getString('user_id')!;
+      firstName = preferences.getString('firstName')!;
+    });
+  }
+
+  @override
   void initState() {
+    super.initState();
     final lessonBloc = BlocProvider.of<LessonBloc>(context);
-
     lessonBloc.add(LessonListLoad(course_id: 1));
-
     final courseBloc = BlocProvider.of<CourseBloc>(context);
-
     courseBloc.add(CourseListLoad(level_id: 2));
+    getUserName();
   }
 
   Widget build(BuildContext context) {
@@ -42,7 +56,7 @@ class _UserHomePageState extends State<UserHomePage> {
                       children: [
                         Row(
                           children: [
-                            Text('ሰላም አሌክስ  ',
+                            Text('ሰላም $firstName',
                                 style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
