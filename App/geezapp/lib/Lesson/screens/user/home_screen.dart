@@ -44,7 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: EdgeInsets.only(right: 60),
                           child: IconButton(
                               onPressed: () {
-                                BlocProvider.of<LessonBloc>(context).add(LessonListLoad(course_id: state.lesson.course_id));
+                                BlocProvider.of<LessonBloc>(context).add(
+                                    LessonListLoad(
+                                        course_id: state.lesson.course_id));
                                 Navigator.pop(context);
                               },
                               icon: Icon(Icons.arrow_back)),
@@ -78,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ]),
             Container(
-              height: 400,
+              height: 500,
               margin: EdgeInsets.all(30),
               padding: EdgeInsets.all(20),
               decoration:

@@ -1,6 +1,8 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geezapp/Coursenew/data_providers/course_data_provider.dart';
+import 'package:geezapp/Coursenew/repository/course_repository.dart';
 import 'package:geezapp/Lesson/data_providers/lesson-data-provider.dart';
 import 'package:geezapp/Lesson/repository/lesson-repository.dart';
 import 'package:geezapp/profile/signup/bloc/signup_bloc.dart';
@@ -15,6 +17,7 @@ import 'package:geezapp/profile/signup/signup.dart';
 import 'Auth/auth_bloc.dart';
 import 'Auth/auth_event.dart';
 import 'Auth/auth_state.dart';
+import 'Coursenew/blocs/course_bloc.dart';
 import 'Lesson/blocs/lesson_bloc.dart';
 import 'login/screens/login.dart';
 import 'package:geezapp/routes.dart';
@@ -50,6 +53,7 @@ void main() async {
   final userRepository = UserRepository();
   final signupRepository = SignupRepository(dataProvider: SignupDataProvider());
   final lessonRepository = LessonRepository(LessonDataProvider());
+  final courseRepository = CourseRepository(CourseDataProvider());
   final profileScreenRepository =
       ProfileScreenRepository(dataProvider: ProfileScreenDataProvider());
   runApp(
@@ -57,6 +61,9 @@ void main() async {
       providers: [
         BlocProvider(
           create: (ctx) => LessonBloc(lessonRepository: lessonRepository),
+        ),
+        BlocProvider(
+          create: (ctx) => CourseBloc(courseRepository: courseRepository),
         ),
         BlocProvider<AuthenticationBloc>(
           create: (context) {

@@ -6,6 +6,8 @@ abstract class LessonState extends Equatable {
 
   @override
   List<Object> get props => [];
+
+  get courses => null;
 }
 
 class LessonLoading extends LessonState {}
