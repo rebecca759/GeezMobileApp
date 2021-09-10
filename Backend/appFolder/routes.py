@@ -145,17 +145,6 @@ exam_fields = {
 
 #signin or login
 
-
-class UseSignIn(Resource):
-    def post(self):
-        email = request.json['email']
-        password = request.json['password']
-        result = User.query.filter_by(email=email).first()
-        if result:
-            if result.password == password:
-                return {"message": "login", "user_id": str(result.user_id), "email": result.email, "password": result.password}
-        return {"message": "not login", "user_id": "", "email": "", "password": ""}
-
 #signup or register
 
 
