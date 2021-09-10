@@ -6,7 +6,7 @@ import 'package:geezapp/Lesson/repository/lesson-repository.dart';
 import 'package:geezapp/profile/signup/bloc/signup_bloc.dart';
 import 'package:geezapp/profile/signup/repository/signup.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
-import 'package:geezapp/course/screens/home_screen.dart';
+import 'package:geezapp/Lesson/screens/user/home_screen.dart';
 import 'package:geezapp/login/repository/login.dart';
 import 'package:geezapp/profile/profile_screen/bloc/profile_screen_bloc.dart';
 import 'package:geezapp/profile/profile_screen/data_provider/profile_screen.dart';
@@ -19,7 +19,7 @@ import 'Lesson/blocs/lesson_bloc.dart';
 import 'login/screens/login.dart';
 import 'package:geezapp/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'course/screens/UserHomePage.dart';
+import 'Lesson/screens/user/UserHomePage.dart';
 
 class SimpleBlocDelegate extends BlocObserver {
   @override
@@ -71,6 +71,7 @@ void main() async {
             create: (ctx) => SignupBloc(signupRepository: signupRepository)),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         routes: AppRoute.routes,
         initialRoute: AppRoute.initialRoute,
       ),

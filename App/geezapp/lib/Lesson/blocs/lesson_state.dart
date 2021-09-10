@@ -21,3 +21,11 @@ class LessonOperationSuccess extends LessonState {
 
 class LessonOperationFailure extends LessonState {}
 
+class LessonLoadSuccess extends LessonState {
+  final Lesson lesson;
+
+  LessonLoadSuccess(this.lesson);
+
+  @override
+  List<Object> get props => [lesson];
+}

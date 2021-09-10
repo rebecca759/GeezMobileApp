@@ -5,11 +5,14 @@ class LessonRepository {
   final LessonDataProvider dataProvider;
   LessonRepository(this.dataProvider);
 
-  Future<List<Lesson>> fetchLessons() async {
-    return this.dataProvider.fetchLessons();
+  Future<List<Lesson>> fetchLessons(String status) async {
+    return this.dataProvider.fetchLessons(status);
   }
-
   Future<Lesson> create(Lesson lesson) async {
     return this.dataProvider.create(lesson);
+  }
+
+   Future<Lesson> updateLesson(int id, Lesson lesson) async {
+    return this.dataProvider.update(id, lesson);
   }
 }

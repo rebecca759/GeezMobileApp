@@ -12,7 +12,7 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     if (event is LessonLoad) {
       yield LessonLoading();
       try {
-        final lessons = await lessonRepository.fetchLessons();
+        final lessons = await lessonRepository.fetchLessons(event.status);
         yield LessonOperationSuccess(lessons);
       } catch (error) {
         print(error);
@@ -24,7 +24,7 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
       yield LessonLoading();
       try {
         await lessonRepository.create(event.lesson);
-        final lessons = await lessonRepository.fetchLessons();
+        final lessons = await lessonRepository.fetchLessons('approved');
         yield LessonOperationSuccess(lessons);
         await Future.delayed(Duration(seconds: 3));
         yield LessonLoading();
@@ -33,6 +33,20 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
         yield LessonOperationFailure();
         await Future.delayed(Duration(seconds: 3));
         yield LessonLoading();
+      }
+    }
+
+    if (event is LoadLessonContent) {
+      print("lesson load success");
+      yield LessonLoadSuccess(event.lesson);
+    }
+    if (event is LessonUpdate) {
+      try {
+        await lessonRepository.updateLesson(event.lesson.lesson_id ?? 0, event.lesson);
+        final lessons = await lessonRepository.fetchLessons('approved');
+        yield LessonOperationSuccess(lessons);
+      } catch (_) {
+        yield LessonOperationFailure();
       }
     }
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geezapp/login/screens/login.dart';
-import 'package:geezapp/course/screens/UserHomePage.dart';
+import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
 import 'package:geezapp/profile/signup/bloc/signup_bloc.dart';
 import 'package:geezapp/profile/signup/bloc/signup_event.dart';
 import 'package:geezapp/profile/signup/bloc/signup_state.dart';
@@ -120,7 +120,7 @@ class SignUpScreen extends StatelessWidget {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                     icon: Icon(
-                                      Icons.person,
+                                      Icons.mail,
                                       color: Color(0xFFB77415A),
                                     ),
                                     hintText: "ኢሜል",

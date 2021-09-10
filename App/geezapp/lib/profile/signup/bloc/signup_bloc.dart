@@ -39,6 +39,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           yield SignupLoadSuccess(signup);
         }
       } catch (_) {
+        print(_);
         yield SignupOperationFailure();
       }
     }

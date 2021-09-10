@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geezapp/Lesson/screens/AdminMain.dart';
+import 'package:geezapp/Lesson/screens/admin/AdminMain.dart';
 
 class AdminLoginScreen extends StatelessWidget {
   static const String routeName = "/adminlogin";

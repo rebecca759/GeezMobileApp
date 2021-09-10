@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
-import 'package:geezapp/course/screens/GrammarPage.dart';
+import 'package:geezapp/Lesson/screens/user/GrammarPage.dart';
 import 'package:geezapp/enums.dart';
 
 class Courses2 extends StatefulWidget {

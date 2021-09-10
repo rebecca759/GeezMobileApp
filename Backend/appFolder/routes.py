@@ -218,13 +218,13 @@ class UserProfile(Resource):
 class LessonResource(Resource):
     def get(self, lesson_status):
         final_res = []
+        return_json = {}
 
         result = Lesson.query.filter_by(status=lesson_status).all()
         for item in result:
             result2 = User.query.filter_by(user_id=item.teacher_id).first()
-            print(result2.firstName)
-            print(item.teacher_id)
-            return_json = {'lesson_id': item.lesson_id,
+            if result2:
+                return_json = {'lesson_id': item.lesson_id,
                            'lessonName': item.lessonName,
                            'level_id': item.level_id,
                            'course_id': item.course_id,

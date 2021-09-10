@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geezapp/Auth/auth_bloc.dart';
 import 'package:geezapp/Auth/auth_state.dart';
-import 'package:geezapp/course/screens/UserHomePage.dart';
+import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
 import 'package:geezapp/login/repository/login.dart';
 import 'package:geezapp/login/screens/login.dart';
 import 'package:geezapp/main.dart';

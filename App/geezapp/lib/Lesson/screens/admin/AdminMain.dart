@@ -1,4 +1,4 @@
-import 'package:geezapp/Lesson/screens/admin2.dart';
+import 'package:geezapp/Lesson/screens/admin/admin2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

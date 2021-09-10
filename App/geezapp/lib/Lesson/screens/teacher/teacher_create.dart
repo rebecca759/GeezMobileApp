@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
-import 'package:geezapp/teacher/screens/create_lessons.dart';
-import 'package:geezapp/teacher/screens/create_test.dart';
+import 'package:geezapp/Lesson/screens/teacher/create_lessons.dart';
+import 'package:geezapp/Lesson/screens/teacher/create_test.dart';
 
-import '../../enums.dart';
+import '../../../enums.dart';
 
 void main() => runApp(const TeacherCreate());
 

@@ -6,12 +6,12 @@ abstract class LessonEvent extends Equatable {
 }
 
 class LessonLoad extends LessonEvent {
-  const LessonLoad();
+  final String status;
+  const LessonLoad(this.status);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [this.status];
 }
-
 class LessonCreate extends LessonEvent {
   final Lesson lesson;
 
@@ -23,5 +23,24 @@ class LessonCreate extends LessonEvent {
   @override
   String toString() => 'lesson Created {lesson: $lesson}';
 }
-   
+  
+class LoadLessonContent extends LessonEvent {
+  final Lesson lesson;
+  LoadLessonContent(this.lesson);
+
+  @override
+  List<Object?> get props => [this.lesson];
+}
+
+class LessonUpdate extends LessonEvent {
+  final Lesson lesson;
+
+  const LessonUpdate(this.lesson);
+
+  @override
+  List<Object> get props => [lesson];
+
+  @override
+  String toString() => 'Lesson Updated {lesson: $lesson}';
+}
 
