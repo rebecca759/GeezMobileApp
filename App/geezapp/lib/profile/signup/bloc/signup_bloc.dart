@@ -26,6 +26,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       try {
         bool emailFound = false;
         final signup = await signupRepository.fetchAll();
+        print(signup);
         for (int i = 0; i < signup.length; i++) {
           if (event.user.email == signup[i].email) {
             emailFound = true;
@@ -38,7 +39,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           await signupRepository.createSignup(event.user);
           yield SignupLoadSuccess(signup);
         }
-      } catch (_) {
+      } catch (e) {
+        print('error $e');
         yield SignupOperationFailure();
       }
     }

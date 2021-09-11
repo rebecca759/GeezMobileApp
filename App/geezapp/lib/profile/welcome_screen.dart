@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geezapp/Lesson/screens/admin/AdminMain.dart';
-import 'package:geezapp/Lesson/screens/admin/admin_login.dart';
-import 'package:geezapp/login/login_auth.dart';
 import 'package:geezapp/login/screens/login.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -50,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
               Container(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, LoginAuth.routeName);
+                    Navigator.pushNamed(context, LoginScreen.routeName);
                   },
                   child: Container(
                     margin: EdgeInsets.only(
@@ -73,23 +70,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, AdminLoginScreen.routeName);
-                },
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    "Admin",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -97,4 +77,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-
