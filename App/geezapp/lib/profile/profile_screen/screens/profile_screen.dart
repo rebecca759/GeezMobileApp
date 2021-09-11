@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geezapp/Auth/auth_bloc.dart';
 import 'package:geezapp/Auth/auth_event.dart';
 import 'package:geezapp/login/screens/login.dart';
-import 'package:geezapp/User/screens/profile_edit.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_bloc.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_event.dart';
+import 'package:geezapp/profile/Profile_edit/screens/profile_edit.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
 import 'package:geezapp/Lesson/screens/user/Courses2.dart';
 import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
@@ -34,7 +36,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _StateProfileScreen extends State<ProfileScreen> {
-  late Future<Album> _futureAlbum;
   String email = "";
   String id = "";
 
@@ -56,7 +57,6 @@ class _StateProfileScreen extends State<ProfileScreen> {
   void initState() {
     super.initState();
     getEmail();
-    _futureAlbum = fetchAlbum();
   }
 
   @override
@@ -173,7 +173,7 @@ class _StateProfileScreen extends State<ProfileScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileEdit()),
+                  MaterialPageRoute(builder: (context) => ProfileEditW()),
                 );
               },
               child: Row(
@@ -256,6 +256,7 @@ class _StateProfileScreen extends State<ProfileScreen> {
                   LoggedOut(),
                 );
                 logOut(context);
+                Navigator.pushNamed(context, LoginScreen.routeName);
               },
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -283,7 +284,8 @@ class _StateProfileScreen extends State<ProfileScreen> {
         ],
       ),
       bottomNavigationBar: CustomNavBar(
-        selectedMenu: MenuState.profile, utype: 'teacher',
+        selectedMenu: MenuState.profile,
+        utype: 'teacher',
       ),
     );
   }
@@ -378,6 +380,8 @@ class CustomNavBar extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
+                    final profileEditBloc = BlocProvider.of<ProfileEditBloc>(context);
+                    profileEditBloc.add(ProfileEditLoad());
                     Navigator.push(
                         context,
                         new MaterialPageRoute(

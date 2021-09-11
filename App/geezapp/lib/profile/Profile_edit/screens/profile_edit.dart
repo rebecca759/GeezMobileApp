@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_bloc.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_event.dart';
+import 'package:geezapp/profile/Profile_edit/profile_edit.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileEdit extends StatefulWidget {
-  const ProfileEdit({Key? key}) : super(key: key);
+class ProfileEditW extends StatefulWidget {
+  const ProfileEditW({Key? key}) : super(key: key);
   static const String routeName = '/edit';
   @override
   _StateProfileEdit createState() => _StateProfileEdit();
 }
 
-class _StateProfileEdit extends State<ProfileEdit> {
-  late Future<Album> futureAlbum;
-  final emailController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final secondNameController = TextEditingController();
-  final passwordController = TextEditingController();
-
+class _StateProfileEdit extends State<ProfileEditW> {
+  final _formKey = GlobalKey<FormState>();
+  final Map<String, dynamic> _profile = {};
   String id = "";
 
   Future getEmail() async {
@@ -31,7 +31,7 @@ class _StateProfileEdit extends State<ProfileEdit> {
   void initState() {
     super.initState();
     getEmail();
-    futureAlbum = fetchAlbum();
+    
   }
 
   @override
@@ -41,14 +41,13 @@ class _StateProfileEdit extends State<ProfileEdit> {
         appBar: AppBar(
             title: Text('Profile Edit Page'),
             backgroundColor: Color(0xFFB77415A)),
-        body: FutureBuilder<Album>(
-          future: futureAlbum,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              emailController.text = snapshot.data!.email;
-              firstNameController.text = snapshot.data!.firstName;
-              secondNameController.text = snapshot.data!.secondName;
-              passwordController.text = snapshot.data!.password;
+        body: BlocBuilder<ProfileEditBloc, ProfileEditState>(
+          builder: (_, state) {
+            if (state is ProfileEditLoadSuccess) {
+              String email = state.profileEdit.email;
+              String firstName = state.profileEdit.firstName;
+              String secondName = state.profileEdit.secondName;
+              String password = state.profileEdit.password;
               return SingleChildScrollView(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
@@ -58,7 +57,12 @@ class _StateProfileEdit extends State<ProfileEdit> {
                         height: 100,
                       ),
                       TextFormField(
-                        controller: firstNameController,
+                        onSaved: (valf) {
+                          setState(() {
+                            firstName = valf!;
+                          });
+                        },
+                        initialValue: state.profileEdit.firstName,
                         decoration: InputDecoration(
                           hintText: 'first name',
                           border: OutlineInputBorder(
@@ -70,7 +74,12 @@ class _StateProfileEdit extends State<ProfileEdit> {
                         height: 20,
                       ),
                       TextFormField(
-                        controller: secondNameController,
+                        onSaved: (vals) {
+                          setState(() {
+                            secondName = vals!;
+                          });
+                        },
+                        initialValue: state.profileEdit.secondName,
                         decoration: InputDecoration(
                             hintText: 'second name',
                             border: OutlineInputBorder(
@@ -80,7 +89,12 @@ class _StateProfileEdit extends State<ProfileEdit> {
                         height: 20,
                       ),
                       TextFormField(
-                        controller: emailController,
+                        onSaved: (vale) {
+                          setState(() {
+                            email = vale!;
+                          });
+                        },
+                        initialValue: state.profileEdit.email,
                         decoration: InputDecoration(
                             hintText: 'email',
                             border: OutlineInputBorder(
@@ -90,7 +104,12 @@ class _StateProfileEdit extends State<ProfileEdit> {
                         height: 20,
                       ),
                       TextFormField(
-                        controller: passwordController,
+                        onSaved: (valp) {
+                          setState(() {
+                            password = valp!;
+                          });
+                        },
+                        initialValue: state.profileEdit.password,
                         decoration: InputDecoration(
                             hintText: 'password',
                             border: OutlineInputBorder(
@@ -102,12 +121,20 @@ class _StateProfileEdit extends State<ProfileEdit> {
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            futureAlbum = updateAlbum(
-                                firstNameController.text,
-                                secondNameController.text,
-                                emailController.text,
-                                passwordController.text,
-                                id);
+                            final form = _formKey.currentState;
+                            if (form != null && form.validate()) {
+                              form.save();
+                              BlocProvider.of<ProfileEditBloc>(context)
+                                  .add(ProfileEditUpdate(
+                                ProfileEdit(
+                                  email: email,
+                                  password: password,
+                                  firstName: firstName,
+                                  secondName: secondName,                                 
+                                  
+                                ),
+                              ));
+                            }
                           });
                         },
                         child: Text('Update'),
@@ -123,8 +150,8 @@ class _StateProfileEdit extends State<ProfileEdit> {
                   ),
                 ),
               );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
+            } else if (state is ProfileEditOperationFailure) {
+              return Text('unable to load');
             }
 
             // By default, show a loading spinner.
@@ -133,75 +160,5 @@ class _StateProfileEdit extends State<ProfileEdit> {
         ),
       ),
     );
-  }
-}
-
-Future<Album> fetchAlbum() async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  String id = preferences.getString('user_id')!;
-  final response = await http
-      .get(Uri.parse('http://127.0.0.1:5000/api/v1/user/profile/$id'));
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return Album.fromJson(jsonDecode(response.body)[0]);
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
-
-Future<Album> updateAlbum(String firstName, String secondName, String email,
-    String password, String id) async {
-  final response = await http.patch(
-    Uri.parse('http://127.0.0.1:5000/api/v1/user/profile/$id'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'firstName': firstName,
-      'secondName': secondName,
-      'email': email,
-      'password': password,
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return Album.fromJson(jsonDecode(response.body));
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to update album.');
-  }
-}
-
-class Album {
-  final String email;
-  final String firstName;
-  final String secondName;
-  final String password;
-  final String userType;
-  final String photo;
-
-  Album(
-      {required this.email,
-      required this.firstName,
-      required this.secondName,
-      required this.password,
-      required this.userType,
-      required this.photo});
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-        email: json['email'] ?? "",
-        password: json['password'] ?? "",
-        firstName: json['firstName'] ?? "",
-        secondName: json['secondName'] ?? "",
-        userType: json['userType'] ?? "",
-        photo: json['photo'] ?? "");
   }
 }

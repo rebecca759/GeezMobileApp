@@ -1,3 +1,4 @@
+import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
 import 'package:geezapp/profile/signup/screens/components/background.dart';
 import 'package:geezapp/profile/signup/screens/components/rounded_input_container.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
@@ -37,6 +38,7 @@ class _LoginFormState extends State<LoginForm> {
           password: _passwordController.text,
         ),
       );
+      Navigator.pushNamed(context, UserHomePage.routeName);
     }
 
     return BlocListener<LoginBloc, LoginState>(
@@ -78,7 +80,7 @@ class _LoginFormState extends State<LoginForm> {
                             obscureText: false,
                             decoration: InputDecoration(
                                 icon: Icon(
-                                  Icons.mail,
+                                  Icons.person,
                                   color: Color(0xFFB77415A),
                                 ),
                                 hintText: "ኢሜል",

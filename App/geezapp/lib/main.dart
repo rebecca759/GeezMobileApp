@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geezapp/Lesson/data_providers/lesson-data-provider.dart';
 import 'package:geezapp/Lesson/repository/lesson-repository.dart';
+import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_bloc.dart';
+import 'package:geezapp/profile/Profile_edit/data_provider/profile_edit.dart';
+import 'package:geezapp/profile/Profile_edit/repository/profile_edit.dart';
 import 'package:geezapp/profile/signup/bloc/signup_bloc.dart';
 import 'package:geezapp/profile/signup/repository/signup.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
@@ -52,6 +55,8 @@ void main() async {
   final lessonRepository = LessonRepository(LessonDataProvider());
   final profileScreenRepository =
       ProfileScreenRepository(dataProvider: ProfileScreenDataProvider());
+  final profileEditRepository =
+      ProfileEditRepository(dataProvider: ProfileEditDataProvider());
   runApp(
     MultiBlocProvider(
       providers: [
@@ -69,6 +74,9 @@ void main() async {
                 profileScreenRepository: profileScreenRepository)),
         BlocProvider(
             create: (ctx) => SignupBloc(signupRepository: signupRepository)),
+        BlocProvider(
+            create: (ctx) =>
+                ProfileEditBloc(profileEditRepository: profileEditRepository)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
