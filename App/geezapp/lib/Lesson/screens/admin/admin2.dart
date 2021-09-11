@@ -151,9 +151,16 @@ class _SimpleAppBarPageState extends State<Admin>
                           title: Text('${lessons.elementAt(index).lessonName}'),
                           subtitle: Text(
                               'የአስተማሪ ስም : ${lessons.elementAt(index).teacher_name}'),
-                          trailing: Icon(
-                            Icons.delete,
-                            color: Color(0xFFB751623),
+                          trailing: IconButton(
+                            onPressed: () {
+                              BlocProvider.of<LessonBloc>(context).add(
+                                  LessonDelete(
+                                      lessons.elementAt(index).lesson_id!));
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: Color(0xFFB751623),
+                            ),
                           ),
                           onTap: () {
                             BlocProvider.of<LessonBloc>(context).add(
@@ -176,6 +183,7 @@ class _SimpleAppBarPageState extends State<Admin>
             /////
             BlocBuilder<QuestionBloc, QuestionState>(
                 builder: (_, questionState) {
+              print(questionState);
               if (questionState is LoadOldQuestions) {
                 return CircularProgressIndicator();
               }
@@ -190,8 +198,13 @@ class _SimpleAppBarPageState extends State<Admin>
                     return Center(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, DetailPageQuestion.routeName);
+                          BlocProvider.of<QuestionBloc>(context).add(
+                                LoadQuestionContent(questions.elementAt(index)));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailPageQuestion(index)));
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -215,10 +228,10 @@ class _SimpleAppBarPageState extends State<Admin>
                               trailing: IconButton(
                                 icon: Icon(Icons.delete),
                                 onPressed: () {
-                                  // BlocProvider.of<QuestionBloc>(context).add(
-                                  //     DeleteQuestion(questions
-                                  //         .elementAt(index)
-                                  //         .question_id));
+                                  BlocProvider.of<QuestionBloc>(context).add(
+                                      DeleteQuestion(questions
+                                          .elementAt(index)
+                                          .question_id!));
                                 },
                               )),
                         ),

@@ -43,6 +43,14 @@ class LoadOldQuestions extends QuestionEvents {
   List<Object> get props => [];
 }
 
+class LoadQuestionContent extends QuestionEvents {
+  final Questions question;
+  LoadQuestionContent(this.question);
+
+  @override
+  List<Object?> get props => [this.question];
+}
+
 // event for updating question
 class UpdateQuestion extends QuestionEvents {
   final Questions question;

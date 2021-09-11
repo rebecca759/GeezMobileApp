@@ -273,11 +273,31 @@ class LessonByIdResource(Resource):
         return lesson
 
 
-class QuestionResource(Resource):
-    @marshal_with(question_fields)
+class QuestionStatusResource(Resource):
     def get(self, question_status):
+        final = []
         result = Question.query.filter_by(status=question_status).all()
-        return result
+
+        for item in result:
+            id = item.question_id
+            choice = Choice.query.filter_by(Question_id=id).first()
+            return_json = {
+                'question_id': item.question_id,
+                'question': item.question,
+                'level_id': item.level_id,
+                'user_id': item.user_id,
+                'status': item.status,
+                'choice_id': choice.choice_id,
+                'choice_1': choice.choice_1,
+                'choice_2': choice.choice_2,
+                'choice_3': choice.choice_3,
+                'choice_4': choice.choice_4,
+                'Question_id': choice.Question_id,
+                'Answer': choice.Answer
+            }
+            final.append(return_json)
+
+        return final
 
 
 class QuestionByIdResource(Resource):
@@ -580,6 +600,21 @@ class GetAllUser(Resource):
             return result
         return res
 
+class GetQuestionByQuesId(Resource):
+    def get(self,ques_id):
+        result = Choice.query.filter_by(Question_id=ques_id).first()
+
+        question_json = {
+                'Question_id': result.Question_id,
+                'choice_1': result.choice_1,
+                'choice_2': result.choice_2,
+                'choice_3': result.choice_3,
+                'choice_4': result.choice_4,
+                'Answer': result.Answer
+
+            }
+
+        return jsonify(question_json)
 
 api.add_resource(UseSignIn, "/api/v1/user/login")
 api.add_resource(UserSignUp,  "/api/v1/user/register")
@@ -587,7 +622,7 @@ api.add_resource(UserProfile,  "/api/v1/user/profile/<int:id>")
 api.add_resource(GetAllUser, "/api/v1/user/all")
 
 api.add_resource(LessonResource, "/api/v1/lessons/<string:lesson_status>")
-api.add_resource(QuestionResource,
+api.add_resource(QuestionStatusResource,
                  "/api/v1/questions/<string:question_status>")
 api.add_resource(LessonByIdResource, "/api/v1/lessons/<int:id>")
 api.add_resource(QuestionByIdResource, "/api/v1/questions/<int:id>")
@@ -605,3 +640,5 @@ api.add_resource(GetTeacherTest, "/api/v1/question/<int:id>")
 api.add_resource(PostTeacherTest, "/api/v1/question")
 api.add_resource(GetTest, "/api/v1/question/choice/<int:id>")
 api.add_resource(Exam, "/api/v1/exam")
+api.add_resource(GetQuestionByQuesId, "/api/v1/getchoice/<int:ques_id>")
+

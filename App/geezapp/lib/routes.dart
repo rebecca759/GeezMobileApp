@@ -16,14 +16,13 @@ import 'package:geezapp/Lesson/screens/teacher/create_test.dart';
 import 'package:geezapp/Lesson/screens/teacher/teacher_create.dart';
 import 'package:geezapp/Lesson/screens/teacher/teacher_home.dart';
 import 'package:geezapp/profile/welcome_screen.dart';
-
 import 'Lesson/screens/admin/details_page_exam.dart';
 import 'login/login_auth.dart';
 import 'login/repository/login.dart';
 
 class AppRoute {
 
-  static const initialRoute = WelcomeScreen.routeName;
+  static const initialRoute = UserHomePage.routeName;
 
   static final routes = {
     WelcomeScreen.routeName: (BuildContext context) => WelcomeScreen(),
@@ -50,7 +49,5 @@ class AppRoute {
     CreateLessonApp.routeName: (BuildContext context) => CreateLessonApp(),
     CreateTestApp.routeName: (BuildContext context) => CreateTestApp(),
     QuizScreen.routeName: (BuildContext context) => QuizScreen(),
-    DetailPageQuestion.routeName: (BuildContext context) =>
-        DetailPageQuestion(),
   };
 }

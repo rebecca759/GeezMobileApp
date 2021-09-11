@@ -65,6 +65,7 @@ class QuestionDataProvider {
     final response = await http.get(Uri.parse('$_gedeup_Url/approved'));
     if (response.statusCode == 200) {
       final questions = jsonDecode(response.body) as List;
+      print(questions);
       return questions.map((c) => Questions.fromJson(c)).toList();
     } else {
       throw Exception("Could not fetch the questions");
