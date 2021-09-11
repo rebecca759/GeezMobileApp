@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geezapp/Lesson/screens/admin/AdminMain.dart';
 import 'package:geezapp/Lesson/screens/admin/admin_login.dart';
+import 'package:geezapp/login/login_auth.dart';
 import 'package:geezapp/login/screens/login.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -49,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
               Container(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, LoginScreen.routeName);
+                    Navigator.pushNamed(context, LoginAuth.routeName);
                   },
                   child: Container(
                     margin: EdgeInsets.only(
