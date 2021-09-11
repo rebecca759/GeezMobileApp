@@ -1,4 +1,4 @@
-import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
+import 'package:geezapp/login/login_auth.dart';
 import 'package:geezapp/profile/signup/screens/components/background.dart';
 import 'package:geezapp/profile/signup/screens/components/rounded_input_container.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
@@ -38,7 +38,8 @@ class _LoginFormState extends State<LoginForm> {
           password: _passwordController.text,
         ),
       );
-      Navigator.pushNamed(context, UserHomePage.routeName);
+
+      Navigator.pushNamed(context, LoginAuth.routeName);
     }
 
     return BlocListener<LoginBloc, LoginState>(

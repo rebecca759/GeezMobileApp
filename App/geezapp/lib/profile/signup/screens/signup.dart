@@ -83,7 +83,7 @@ class SignUpScreen extends StatelessWidget {
                                     hintText: "ስም",
                                     border: InputBorder.none),
                                 validator: (v) {
-                                  if (v!.isValidName) {
+                                  if (v!.isNotNull) {
                                     return null;
                                   } else {
                                     return 'Please enter a valid name';
@@ -106,7 +106,7 @@ class SignUpScreen extends StatelessWidget {
                                     hintText: "የአባት ስም",
                                     border: InputBorder.none),
                                 validator: (v) {
-                                  if (v!.isValidName) {
+                                  if (v!.isNotNull) {
                                     return null;
                                   } else {
                                     return 'Please enter a valid name';

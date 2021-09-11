@@ -72,7 +72,7 @@ class _StateProfileEdit extends State<ProfileEditW> {
                             ),
                           ),
                           validator: (v) {
-                            if (v!.isValidName) {
+                            if (v!.isNotNull) {
                               return null;
                             } else {
                               return 'Please enter a valid name';
@@ -94,7 +94,7 @@ class _StateProfileEdit extends State<ProfileEditW> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                           validator: (v) {
-                            if (v!.isValidName) {
+                            if (v!.isNotEmpty) {
                               return null;
                             } else {
                               return 'Please enter a valid name';

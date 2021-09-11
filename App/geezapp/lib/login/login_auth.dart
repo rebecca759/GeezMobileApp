@@ -3,10 +3,9 @@ import 'package:geezapp/Auth/auth_bloc.dart';
 import 'package:geezapp/Auth/auth_state.dart';
 import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
 import 'package:geezapp/login/repository/login.dart';
-import 'package:geezapp/login/screens/login.dart';
-import 'package:geezapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:geezapp/login/style/theme.dart' as Style;
+import 'package:geezapp/profile/welcome_screen.dart';
 
 class LoginAuth extends StatelessWidget {
   static const routeName = '/loginauth';
@@ -30,7 +29,7 @@ class LoginAuth extends StatelessWidget {
         return UserHomePage();
       }
       if (state is AuthenticationUnauthenticated) {
-        return LoginScreen(userRepository: userRepository);
+        return WelcomeScreen();
       }
       if (state is AuthenticationLoading) {
         return Scaffold(
