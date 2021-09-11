@@ -51,10 +51,7 @@ void main() async {
   Bloc.observer = SimpleBlocDelegate();
 
   final userRepository = UserRepository();
-  final commentRepository = CommentRepository(CommentDataProvider());
-  final courseRepository = CourseRepository(CourseDataProvider());
-  final questRepository = QuestionRepository(QuestionDataProvider());
-
+  
   final signupRepository = SignupRepository(dataProvider: SignupDataProvider());
   final lessonRepository = LessonRepository(LessonDataProvider());
   final profileScreenRepository =
@@ -64,15 +61,6 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (ctx) => CommentBloc(commentRepository: commentRepository),
-        ),
-        BlocProvider(
-          create: (ctx) => CourseBloc(courseRepository: courseRepository),
-        ),
-        BlocProvider(
-            create: (ctx) => QuestionBloc(questionRepository: questRepository)
-              ..add(LoadQuestionsById(1))),
         BlocProvider(
           create: (ctx) => LessonBloc(lessonRepository: lessonRepository),
         ),
