@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_bloc.dart';
 import 'package:geezapp/profile/Profile_edit/bloc/profile_edit_event.dart';
 import 'package:geezapp/profile/Profile_edit/profile_edit.dart';
+import 'package:geezapp/profile/form_val.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -31,7 +32,6 @@ class _StateProfileEdit extends State<ProfileEditW> {
   void initState() {
     super.initState();
     getEmail();
-    
   }
 
   @override
@@ -51,106 +51,137 @@ class _StateProfileEdit extends State<ProfileEditW> {
               return SingleChildScrollView(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 100,
-                      ),
-                      TextFormField(
-                        onSaved: (valf) {
-                          setState(() {
-                            firstName = valf!;
-                          });
-                        },
-                        initialValue: state.profileEdit.firstName,
-                        decoration: InputDecoration(
-                          hintText: 'first name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 100,
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        onSaved: (vals) {
-                          setState(() {
-                            secondName = vals!;
-                          });
-                        },
-                        initialValue: state.profileEdit.secondName,
-                        decoration: InputDecoration(
-                            hintText: 'second name',
+                        TextFormField(
+                          onSaved: (valf) {
+                            setState(() {
+                              firstName = valf!;
+                            });
+                          },
+                          initialValue: state.profileEdit.firstName,
+                          decoration: InputDecoration(
+                            hintText: 'first name',
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        onSaved: (vale) {
-                          setState(() {
-                            email = vale!;
-                          });
-                        },
-                        initialValue: state.profileEdit.email,
-                        decoration: InputDecoration(
-                            hintText: 'email',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        onSaved: (valp) {
-                          setState(() {
-                            password = valp!;
-                          });
-                        },
-                        initialValue: state.profileEdit.password,
-                        decoration: InputDecoration(
-                            hintText: 'password',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          validator: (v) {
+                            if (v!.isValidName) {
+                              return null;
+                            } else {
+                              return 'Please enter a valid name';
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          onSaved: (vals) {
+                            setState(() {
+                              secondName = vals!;
+                            });
+                          },
+                          initialValue: state.profileEdit.secondName,
+                          decoration: InputDecoration(
+                              hintText: 'second name',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          validator: (v) {
+                            if (v!.isValidName) {
+                              return null;
+                            } else {
+                              return 'Please enter a valid name';
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          onSaved: (vale) {
+                            setState(() {
+                              email = vale!;
+                            });
+                          },
+                          initialValue: state.profileEdit.email,
+                          decoration: InputDecoration(
+                              hintText: 'email',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          validator: (v) {
+                            if (v!.isValidEmail) {
+                              return null;
+                            } else {
+                              return 'Please enter a valid email';
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          onSaved: (valp) {
+                            setState(() {
+                              password = valp!;
+                            });
+                          },
+                          initialValue: state.profileEdit.password,
+                          decoration: InputDecoration(
+                              hintText: 'password',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          validator: (v) {
+                            if (v!.isValidPassword) {
+                              return null;
+                            } else {
+                              return 'Password must contain an uppercase, lowercase, numeric digit and special character';
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
                             final form = _formKey.currentState;
                             if (form != null && form.validate()) {
                               form.save();
-                              BlocProvider.of<ProfileEditBloc>(context)
-                                  .add(ProfileEditUpdate(
-                                ProfileEdit(
-                                  email: email,
-                                  password: password,
-                                  firstName: firstName,
-                                  secondName: secondName,                                 
-                                  
+                              BlocProvider.of<ProfileEditBloc>(context).add(
+                                ProfileEditUpdate(
+                                  ProfileEdit(
+                                    email: email,
+                                    password: password,
+                                    firstName: firstName,
+                                    secondName: secondName,
+                                  ),
                                 ),
-                              ));
+                              );
                             }
-                          });
-                        },
-                        child: Text('Update'),
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(0xFFB77415A),
-                            fixedSize: Size(350, 50),
-                            textStyle: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50))),
-                      ),
-                    ],
+                            ;
+                          },
+                          child: Text('Update'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Color(0xFFB77415A),
+                              fixedSize: Size(350, 50),
+                              textStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50))),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
-            } else if (state is ProfileEditOperationFailure) {
+            }
+            if (state is ProfileEditOperationFailure) {
               return Text('unable to load');
             }
 

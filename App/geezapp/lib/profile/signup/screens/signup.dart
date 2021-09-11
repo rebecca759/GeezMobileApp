@@ -6,6 +6,7 @@ import 'package:geezapp/profile/signup/bloc/signup_bloc.dart';
 import 'package:geezapp/profile/signup/bloc/signup_event.dart';
 import 'package:geezapp/profile/signup/bloc/signup_state.dart';
 import 'package:geezapp/profile/signup/models/signup.dart';
+import 'package:geezapp/profile/form_val.dart';
 import 'package:get/get.dart';
 import 'components/background.dart';
 import 'components/round_button.dart';
@@ -62,8 +63,8 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      if (state is SignupLoadSuccess){
-                         Navigator.pop(context);
+                      if (state is SignupLoadSuccess) {
+                        Navigator.pop(context);
                       }
                     }, builder: (ctx, state) {
                       return Form(
@@ -81,11 +82,12 @@ class SignUpScreen extends StatelessWidget {
                                     ),
                                     hintText: "ስም",
                                     border: InputBorder.none),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Required';
+                                validator: (v) {
+                                  if (v!.isValidName) {
+                                    return null;
+                                  } else {
+                                    return 'Please enter a valid name';
                                   }
-                                  return null;
                                 },
                               ),
                             ),
@@ -103,11 +105,12 @@ class SignUpScreen extends StatelessWidget {
                                     ),
                                     hintText: "የአባት ስም",
                                     border: InputBorder.none),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Required';
+                                validator: (v) {
+                                  if (v!.isValidName) {
+                                    return null;
+                                  } else {
+                                    return 'Please enter a valid name';
                                   }
-                                  return null;
                                 },
                               ),
                             ),
@@ -125,11 +128,12 @@ class SignUpScreen extends StatelessWidget {
                                     ),
                                     hintText: "ኢሜል",
                                     border: InputBorder.none),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Required';
+                                validator: (v) {
+                                  if (v!.isValidEmail) {
+                                    return null;
+                                  } else {
+                                    return 'Please enter a valid email';
                                   }
-                                  return null;
                                 },
                               ),
                             ),
@@ -147,11 +151,12 @@ class SignUpScreen extends StatelessWidget {
                                     ),
                                     hintText: "የይለፍ ቃል",
                                     border: InputBorder.none),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Required';
+                                validator: (v) {
+                                  if (v!.isValidPassword) {
+                                    return null;
+                                  } else {
+                                    return 'Password must contain an uppercase, lowercase, numeric digit and special character';
                                   }
-                                  return null;
                                 },
                               ),
                             ),
@@ -177,7 +182,6 @@ class SignUpScreen extends StatelessWidget {
                                   );
                                   BlocProvider.of<SignupBloc>(context)
                                       .add(event);
-                                  
                                 }
                               },
                               child: Container(

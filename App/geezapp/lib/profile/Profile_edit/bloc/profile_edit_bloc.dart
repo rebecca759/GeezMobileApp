@@ -30,7 +30,8 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
         await profileEditRepository.updateUser(event.profileEdit);
         final users = await profileEditRepository.getUser();
         yield ProfileEditLoadSuccess(users);
-      } catch (_) {
+      } catch (e) {
+        print(e);
         yield ProfileEditOperationFailure();
       }
     }

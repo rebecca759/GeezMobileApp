@@ -45,7 +45,7 @@ class ProfileEditDataProvider {
       }),
     );
 
-    if (response.statusCode != 204) {
+    if (response.statusCode != 200) {
       throw Exception('Failed to update profile.');
     }
   }

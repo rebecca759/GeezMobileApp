@@ -5,7 +5,7 @@ import 'package:geezapp/Lesson/screens/admin/admin_login.dart';
 import 'package:geezapp/Lesson/screens/admin/details.dart';
 import 'package:geezapp/profile/Profile_edit/screens/profile_edit.dart';
 import 'package:geezapp/profile/signup/screens/signup.dart';
-import 'package:geezapp/User/screens/welcome_screen.dart';
+import 'package:geezapp/profile/welcome_screen.dart';
 import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
 import 'package:geezapp/Lesson/screens/user/GrammarPage.dart';
 import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
@@ -21,11 +21,13 @@ import 'login/login_auth.dart';
 import 'login/repository/login.dart';
 
 class AppRoute {
-  static const initialRoute = UserHomePage.routeName;
+  static const initialRoute = WelcomeScreen.routeName;
 
   static final routes = {
     WelcomeScreen.routeName: (BuildContext context) => WelcomeScreen(),
-    LoginScreen.routeName: (BuildContext context) => LoginScreen(userRepository: UserRepository(),),
+    LoginScreen.routeName: (BuildContext context) => LoginScreen(
+          userRepository: UserRepository(),
+        ),
     SignUpScreen.routeName: (BuildContext context) => SignUpScreen(),
     ProfileScreen.routeName: (BuildContext context) => ProfileScreen(),
     UserHomePage.routeName: (BuildContext context) => UserHomePage(),
@@ -34,14 +36,17 @@ class AppRoute {
     HomeScreen.routeName: (BuildContext context) => HomeScreen(),
     ProfileEditW.routeName: (BuildContext context) => ProfileEditW(),
     AdminLoginScreen.routeName: (BuildContext context) => AdminLoginScreen(),
-    MainPage.routeName: (BuildContext context) => MainPage(title: 'አድሚን',),
-    LoginAuth.routeName: (BuildContext context) => LoginAuth(userRepository: UserRepository(),),
+    MainPage.routeName: (BuildContext context) => MainPage(
+          title: 'አድሚን',
+        ),
+    LoginAuth.routeName: (BuildContext context) => LoginAuth(
+          userRepository: UserRepository(),
+        ),
     DetailPage.routeName: (BuildContext context) => DetailPage(),
     TeacherHome.routeName: (BuildContext context) => TeacherHome(),
     TeacherCreate.routeName: (BuildContext context) => TeacherCreate(),
     CreateLessonApp.routeName: (BuildContext context) => CreateLessonApp(),
     CreateTestApp.routeName: (BuildContext context) => CreateTestApp(),
     QuizScreen.routeName: (BuildContext context) => QuizScreen(),
-
   };
 }

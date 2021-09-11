@@ -11,7 +11,7 @@ class ProfileEditRepository {
     return await dataProvider.getUser();
   }
 
-  Future<void> updateUser(ProfileEdit course) async {
-    await dataProvider.updateUser(course);
+  Future<void> updateUser(ProfileEdit user) async {
+    await dataProvider.updateUser(user);
   }
 }
