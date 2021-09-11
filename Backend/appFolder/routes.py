@@ -591,11 +591,11 @@ class GetAllUser(Resource):
         result = User.query.all()
         if result:
             json = {'email': result.email,
-    'firstName': result.firstName,
-    'secondName': result.secondName,
-    'password': result.password,
-    'userType': result.userType,
-    'photo': result.photo}
+                    'firstName': result.firstName,
+                    'secondName': result.secondName,
+                    'password': result.password,
+                    'userType': result.userType,
+                    'photo': result.photo}
             res.append(json)
             return result
         return res

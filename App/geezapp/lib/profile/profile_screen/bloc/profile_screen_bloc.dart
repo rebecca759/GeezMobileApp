@@ -17,18 +17,19 @@ class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
       try {
         final courses = await profileScreenRepository.getProfile();
         yield ProfileScreenLoadSuccess(courses);
-      } catch (_) {
+      } catch (e) {
+        print(e);
         yield ProfileScreenOperationFailure();
       }
     }
-
 
     if (event is ProfileScreenDelete) {
       try {
         await profileScreenRepository.deleteProfile();
         final courses = await profileScreenRepository.getProfile();
         yield ProfileScreenLoadSuccess(courses);
-      } catch (_) {
+      } catch (e) {
+        print(e);
         yield ProfileScreenOperationFailure();
       }
     }

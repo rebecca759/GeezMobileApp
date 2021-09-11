@@ -8,6 +8,12 @@ import 'package:http/http.dart' as http;
 class ProfileScreenDataProvider {
   final _baseUrl = 'http://127.0.0.1:5000/api/v1';
   //final http.Client httpClient;
+  String id = "";
+
+  Future getId() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    id = preferences.getString('user_id')!;
+  }
 
   Future<List<ProfileScreen>> getProfile() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -16,15 +22,16 @@ class ProfileScreenDataProvider {
 
     if (response.statusCode == 200) {
       final profiles = jsonDecode(response.body) as List;
-      return profiles.map((profileScreen) => ProfileScreen.fromJson(profileScreen)).toList();
+      return profiles
+          .map((profileScreen) => ProfileScreen.fromJson(profileScreen))
+          .toList();
     } else {
       throw Exception('Failed to load courses');
     }
   }
 
   Future<void> deleteProfile() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String id = preferences.getString('user_id')!;
+    getId();
     final http.Response response = await http.delete(
       '$_baseUrl/user/profile/$id',
       headers: <String, String>{
@@ -32,7 +39,7 @@ class ProfileScreenDataProvider {
       },
     );
 
-    if (response.statusCode != 204) {
+    if (response.statusCode != 200) {
       throw Exception('Failed to delete profile.');
     }
   }
