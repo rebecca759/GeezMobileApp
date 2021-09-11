@@ -22,7 +22,7 @@ import 'login/login_auth.dart';
 import 'login/repository/login.dart';
 
 class AppRoute {
-  static const initialRoute = UserHomePage.routeName;
+  static const initialRoute = WelcomeScreen.routeName;
   static final routes = {
     WelcomeScreen.routeName: (BuildContext context) => WelcomeScreen(),
     LoginScreen.routeName: (BuildContext context) => LoginScreen(
