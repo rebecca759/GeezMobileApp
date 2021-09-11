@@ -38,7 +38,6 @@ class _LoginFormState extends State<LoginForm> {
           password: _passwordController.text,
         ),
       );
-
       Navigator.pushNamed(context, LoginAuth.routeName);
     }
 
@@ -50,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
               content: Text("incorrect username or password"),
               backgroundColor: Colors.red,
             ),
-          );
+          );          
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(

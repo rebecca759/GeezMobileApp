@@ -4,6 +4,7 @@ import 'package:geezapp/profile/profile_screen/screens/profile_screen.dart';
 import 'package:geezapp/Lesson/screens/user/GrammarPage.dart';
 import 'package:geezapp/Lesson/screens/user/home_screen.dart';
 import 'package:geezapp/enums.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserHomePage extends StatefulWidget {
   static const String routeName = '/userhome';
@@ -11,6 +12,25 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
+  String email = "";
+  String id = "";
+  String firstName = "";
+
+  Future getUserName() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      email = preferences.getString('email')!;
+      id = preferences.getString('user_id')!;
+      firstName = preferences.getString('firstName')!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserName();
+  }
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -26,7 +46,7 @@ class _UserHomePageState extends State<UserHomePage> {
                       children: [
                         Row(
                           children: [
-                            Text('ሰላም አሌክስ  ',
+                            Text('Hi $firstName ',
                                 style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
@@ -44,24 +64,25 @@ class _UserHomePageState extends State<UserHomePage> {
                       border:
                           Border.all(color: Color.fromRGBO(232, 231, 229, 0.5)),
                       borderRadius: BorderRadius.circular(10)),
-                  child:
-                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Column(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'ደረጃ አንድ',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              backgroundColor: Colors.green,
-                            )),
-                        Text('12/50 ትምህርቶች', style: TextStyle(fontSize: 20))
-                      ],
-                    )
-                  ]),
+                        Column(
+                          children: [
+                            Text(
+                              'ደረጃ አንድ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.green,
+                                )),
+                            Text('12/50 ትምህርቶች', style: TextStyle(fontSize: 20))
+                          ],
+                        )
+                      ]),
                 ),
                 Row(children: [
                   Text('ተያያዥ ትምህርቶች ',
@@ -74,8 +95,8 @@ class _UserHomePageState extends State<UserHomePage> {
                     margin: EdgeInsets.only(bottom: 10, top: 10),
                     decoration: BoxDecoration(
                       border: Border(
-                          top:
-                              BorderSide(color: Color.fromRGBO(211, 211, 211, 1)),
+                          top: BorderSide(
+                              color: Color.fromRGBO(211, 211, 211, 1)),
                           bottom: BorderSide(
                               color: Color.fromRGBO(211, 211, 211, 1))),
                     ),
@@ -97,7 +118,8 @@ class _UserHomePageState extends State<UserHomePage> {
                                 child: Text(
                                   'ወራት',
                                   style: TextStyle(
-                                      fontSize: 30, fontWeight: FontWeight.bold),
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               )),
                         ),
@@ -157,7 +179,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                      color: Color.fromRGBO(211, 211, 211, 1)))),
+                                      color:
+                                          Color.fromRGBO(211, 211, 211, 1)))),
                           child: Row(
                             children: [
                               Icon(Icons.play_arrow),
@@ -183,7 +206,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                      color: Color.fromRGBO(211, 211, 211, 1)))),
+                                      color:
+                                          Color.fromRGBO(211, 211, 211, 1)))),
                           child: Row(
                             children: [
                               Icon(Icons.play_arrow),
@@ -206,7 +230,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                      color: Color.fromRGBO(211, 211, 211, 1)))),
+                                      color:
+                                          Color.fromRGBO(211, 211, 211, 1)))),
                           child: Row(
                             children: [
                               Icon(Icons.play_arrow),
@@ -229,7 +254,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                      color: Color.fromRGBO(211, 211, 211, 1)))),
+                                      color:
+                                          Color.fromRGBO(211, 211, 211, 1)))),
                           child: Row(
                             children: [
                               Icon(Icons.play_arrow),
@@ -255,7 +281,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                      color: Color.fromRGBO(211, 211, 211, 1)))),
+                                      color:
+                                          Color.fromRGBO(211, 211, 211, 1)))),
                           child: Row(
                             children: [
                               Icon(Icons.play_arrow),
@@ -280,10 +307,8 @@ class _UserHomePageState extends State<UserHomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavBar(
-        selectedMenu: MenuState.home,
-        utype: 'user'
-      ),
+      bottomNavigationBar:
+          CustomNavBar(selectedMenu: MenuState.home, utype: 'user'),
     );
   }
 }

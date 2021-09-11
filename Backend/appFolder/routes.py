@@ -153,8 +153,8 @@ class UseSignIn(Resource):
         result = User.query.filter_by(email=email).first()
         if result:
             if result.password == password:
-                return {"message": "login", "user_id": str(result.user_id), "email": result.email, "password": result.password}
-        return {"message": "not login", "user_id": "", "email": "", "password": ""}
+                return {"message": "login", "user_id": str(result.user_id), "email": result.email, "password": result.password, "firstName": result.firstName}
+        return {"message": "not login", "user_id": "", "email": "", "password": "", "firstName": ""}
 
 #signup or register
 
