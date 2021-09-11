@@ -1,30 +1,70 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:geezapp/login/bloc/bloc.dart';
 
-import 'package:geezapp/main.dart';
+import 'package:mockito/mockito.dart';
+import 'package:geezapp/Auth/auth.dart';
+import 'package:geezapp/login/repository/repository.dart';
+import 'package:geezapp/login/login.dart';
+
+class MockUserRepository extends Mock implements UserRepository {}
+
+class MockAuthenticationBloc extends Mock implements AuthenticationBloc {}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  LoginBloc? loginBloc;
+  MockUserRepository? userRepository;
+  MockAuthenticationBloc? authenticationBloc;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  setUp(() {
+    userRepository = MockUserRepository();
+    authenticationBloc = MockAuthenticationBloc();
+    loginBloc = LoginBloc(
+      userRepository: userRepository!,
+      authenticationBloc: authenticationBloc!,
+    );
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  tearDown(() {
+    loginBloc!.close();
+    authenticationBloc!.close();
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('initial state is correct', () {
+    expect(LoginInitial(), loginBloc!.initialState);
+  });
+
+  test('close does not emit new states', () {
+    expectLater(
+      loginBloc,
+      emitsInOrder([LoginInitial(), emitsDone]),
+    );
+    loginBloc!.close();
+  });
+
+  group('LoginButtonPressed', () {
+    test('emits token on success', () {
+      final expectedResponse = [
+        LoginInitial(),
+        LoginLoading(),
+        LoginInitial(),
+      ];
+
+      when(userRepository!.login(
+        'mmm@',
+       '123',
+      )).thenAnswer((_) => Future.value('user_id'));
+
+      expectLater(
+        loginBloc,
+        emitsInOrder(expectedResponse),
+      ).then((_) {
+        verify(authenticationBloc!.add(LoggedIn(token: 'user_id'))).called(1);
+      });
+
+      loginBloc!.add(LoginButtonPressed(
+        email: '@mmm',
+        password: '123',
+      ));
+    });
   });
 }

@@ -27,7 +27,7 @@ class UserRepository {
     storage.deleteAll();
   }
 
-  Future<String> login(String email, String password) async {
+  Future<String> login(String email, String password,) async {
     Response response = await _dio.post(loginUrl, data: {
       "email": email,
       "password": password,
