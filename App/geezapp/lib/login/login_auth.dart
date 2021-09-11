@@ -6,13 +6,26 @@ import 'package:geezapp/login/repository/login.dart';
 import 'package:flutter/material.dart';
 import 'package:geezapp/login/style/theme.dart' as Style;
 import 'package:geezapp/profile/welcome_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginAuth extends StatelessWidget {
+class LoginAuth extends StatefulWidget {
   static const routeName = '/loginauth';
   final UserRepository userRepository;
 
   LoginAuth({Key? key, required this.userRepository}) : super(key: key);
 
+  @override
+  State<LoginAuth> createState() => _LoginAuthState();
+}
+
+String userType = "";
+
+  Future getId() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userType = preferences.getString('userType')!;
+  } 
+
+class _LoginAuthState extends State<LoginAuth> {
   @override
   Widget build(BuildContext context) {
     // return MaterialApp(
@@ -26,6 +39,7 @@ class LoginAuth extends StatelessWidget {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
       if (state is AuthenticationAuthenticated) {
+       
         return UserHomePage();
       }
       if (state is AuthenticationUnauthenticated) {

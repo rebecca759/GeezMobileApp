@@ -153,8 +153,8 @@ class UseSignIn(Resource):
         result = User.query.filter_by(email=email).first()
         if result:
             if result.password == password:
-                return {"message": "login", "user_id": str(result.user_id), "email": result.email, "password": result.password, "firstName": result.firstName}
-        return {"message": "not login", "user_id": "", "email": "", "password": "", "firstName": ""}
+                return {"message": "login", "user_id": str(result.user_id), "email": result.email, "password": result.password, "firstName": result.firstName, "userType": result.userType}
+        return {"message": "not login", "user_id": "", "email": "", "password": "", "firstName": "", "userType": ""}
 
 
 #signup or register
@@ -600,21 +600,23 @@ class GetAllUser(Resource):
             return result
         return res
 
+
 class GetQuestionByQuesId(Resource):
-    def get(self,ques_id):
+    def get(self, ques_id):
         result = Choice.query.filter_by(Question_id=ques_id).first()
 
         question_json = {
-                'Question_id': result.Question_id,
-                'choice_1': result.choice_1,
-                'choice_2': result.choice_2,
-                'choice_3': result.choice_3,
-                'choice_4': result.choice_4,
-                'Answer': result.Answer
+            'Question_id': result.Question_id,
+            'choice_1': result.choice_1,
+            'choice_2': result.choice_2,
+            'choice_3': result.choice_3,
+            'choice_4': result.choice_4,
+            'Answer': result.Answer
 
-            }
+        }
 
         return jsonify(question_json)
+
 
 api.add_resource(UseSignIn, "/api/v1/user/login")
 api.add_resource(UserSignUp,  "/api/v1/user/register")
@@ -641,4 +643,3 @@ api.add_resource(PostTeacherTest, "/api/v1/question")
 api.add_resource(GetTest, "/api/v1/question/choice/<int:id>")
 api.add_resource(Exam, "/api/v1/exam")
 api.add_resource(GetQuestionByQuesId, "/api/v1/getchoice/<int:ques_id>")
-
