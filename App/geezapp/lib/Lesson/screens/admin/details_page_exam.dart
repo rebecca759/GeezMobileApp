@@ -8,7 +8,7 @@ class DetailPageQuestion extends StatefulWidget {
   static const String routeName = '/details_exam';
   final int index = 1;
 
-  DetailPageQuestion();
+  DetailPageQuestion(index);
 
   @override
   _StateDetailPageQuestion createState() {
@@ -41,6 +41,8 @@ class _StateDetailPageQuestion extends State<DetailPageQuestion> {
       ),
       body: BlocBuilder<QuestionBloc, QuestionState>(
         builder: (_, state) {
+          print("STATE");
+          print(state);
           if (state is QuestionOperationFailure) {
             return Text('Could not do lesson operation');
           }
@@ -54,6 +56,12 @@ class _StateDetailPageQuestion extends State<DetailPageQuestion> {
             String questionChoice3 = state.question.choice_3;
             String questionChoice4 = state.question.choice_4;
             String questionAnswer = state.question.answer;
+
+            print("Choice");
+            print(questionChoice1);
+            print(questionChoice2);
+            print(questionChoice3);
+            print(questionChoice4);
 
             return Form(
               key: _formKey,
@@ -105,7 +113,6 @@ class _StateDetailPageQuestion extends State<DetailPageQuestion> {
                           fillColor: Color(0xFE0E0E0),
                           filled: true,
                         ),
-                        maxLines: 20,
                         onSaved: (val) {
                           setState(() {
                             questionChoice1 = val!;

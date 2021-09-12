@@ -10,26 +10,26 @@ const List sample_data = [
   {
     "id": 1,
     "question":
-        "Flutter is an open-source UI software development kit created by ______",
-    "options": ['Apple', 'Google', 'Facebook', 'Microsoft'],
+        "የ 'ሖረ' ግስ የአማርኛ ፍቺ ምንድነው?",
+    "options": ['ሐዋረ', 'ተማረ', 'ሄደ', 'ተቀመጠ'],
     "answer_index": 1,
   },
   {
     "id": 2,
-    "question": "When google release Flutter.",
-    "options": ['Jun 2017', 'Jun 2017', 'May 2017', 'May 2018'],
+    "question": "በግዕዝ ሰላምታ ለወንድ እንዴት ነው ሚባለው?",
+    "options": ['ሰላም ላንቺ', 'ሰላም ለናንት', 'ሰላም ለሊሁ', 'ሰላም ለከ'],
     "answer_index": 2,
   },
   {
     "id": 3,
-    "question": "A memory location that holds a single letter or number.",
-    "options": ['Double', 'Int', 'Char', 'Word'],
+    "question": "በግዕዝ ሰላምታ ለብዙ ሰዎች እንዴት ነው ሚባለው?",
+    "options": ['ቅኔ የግዕዝ ዓረፍት ነገር ክፍል ነው።', 'ዓረፍት ነገር ትርጉም የሚሰጥ የፊደላት ስበሰብ ነው።', 'ፊደላት ዓረፍተ ነገር መሆን ይችላሉ።', 'ሁሉም መልስ ይሆናሉ'],
     "answer_index": 2,
   },
   {
     "id": 4,
-    "question": "What command do you use to output data to the screen?",
-    "options": ['Cin', 'Count>>', 'Cout', 'Output>>'],
+    "question": "ከሚከተሉት ወስጥ ትከከለኛወን የ'ነበረ' ግስ ትዕዛዝ አወራረድ የቱ ነው።",
+    "options": ['"ነቢር"', 'ይነበሮ', 'ነባሪያን', 'ፈጢር'],
     "answer_index": 2,
   },
 ];

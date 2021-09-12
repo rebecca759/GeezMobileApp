@@ -31,6 +31,11 @@ class QuestionBloc extends Bloc<QuestionEvents, QuestionState> {
       }
     }
 
+    if (event is LoadQuestionContent) {
+      print("lesson load success");
+      yield QuestionLoadSuccess(event.question);
+    }
+
     if (event is LoadOldQuestions) {
       yield QuestionLoading();
       try {
