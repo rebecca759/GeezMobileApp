@@ -42,9 +42,9 @@ class _LoginAuthState extends State<LoginAuth> {
       if (state is AuthenticationAuthenticated) {
         print(userType);
         if (userType == 'teacher') {
-          return UserHomePage();
+          return TeacherHome();
         }
-        return TeacherHome();
+        return UserHomePage();
       }
       if (state is AuthenticationUnauthenticated) {
         return WelcomeScreen();
