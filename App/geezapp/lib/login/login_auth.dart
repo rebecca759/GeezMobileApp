@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geezapp/Auth/auth_bloc.dart';
 import 'package:geezapp/Auth/auth_state.dart';
+import 'package:geezapp/Lesson/screens/teacher/teacher_home.dart';
 import 'package:geezapp/Lesson/screens/user/UserHomePage.dart';
 import 'package:geezapp/login/repository/login.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,10 @@ class LoginAuth extends StatefulWidget {
 
 String userType = "";
 
-  Future getId() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userType = preferences.getString('userType')!;
-  } 
+Future getId() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  userType = preferences.getString('userType')!;
+}
 
 class _LoginAuthState extends State<LoginAuth> {
   @override
@@ -39,8 +40,11 @@ class _LoginAuthState extends State<LoginAuth> {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
       if (state is AuthenticationAuthenticated) {
-       
-        return UserHomePage();
+        print(userType);
+        if (userType == 'teacher') {
+          return UserHomePage();
+        }
+        return TeacherHome();
       }
       if (state is AuthenticationUnauthenticated) {
         return WelcomeScreen();

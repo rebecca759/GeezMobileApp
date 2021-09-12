@@ -13,7 +13,7 @@ class ProfileEditDataProvider {
   Future<ProfileEdit> getUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id = preferences.getString('user_id')!;
-    final response = await http.get('$_baseUrl/user/profile/$id');
+    final response = await http.get(Uri.parse('$_baseUrl/user/profile/$id'));
     print(response.body);
     if (response.statusCode == 200) {
       print('response 200');
@@ -33,7 +33,7 @@ class ProfileEditDataProvider {
     String id = preferences.getString('user_id')!;
 
     final http.Response response = await http.patch(
-      '$_baseUrl/user/profile/$id',
+      Uri.parse('$_baseUrl/user/profile/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

@@ -18,7 +18,7 @@ class ProfileScreenDataProvider {
   Future<List<ProfileScreen>> getProfile() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id = preferences.getString('user_id')!;
-    final response = await http.get('$_baseUrl/user/profile/$id');
+    final response = await http.get(Uri.parse('$_baseUrl/user/profile/$id'));
 
     if (response.statusCode == 200) {
       final profiles = jsonDecode(response.body) as List;
@@ -33,7 +33,7 @@ class ProfileScreenDataProvider {
   Future<void> deleteProfile() async {
     getId();
     final http.Response response = await http.delete(
-      '$_baseUrl/user/profile/$id',
+      Uri.parse('$_baseUrl/user/profile/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
