@@ -566,12 +566,19 @@ class Exam(Resource):
 
 
 class GetAllUser(Resource):
-    @marshal_with(resource_fields)
     def get(self):
+        res = []
         result = User.query.all()
         if result:
+            json = {'email': result.email,
+    'firstName': result.firstName,
+    'secondName': result.secondName,
+    'password': result.password,
+    'userType': result.userType,
+    'photo': result.photo}
+            res.append(json)
             return result
-        return "user not found"
+        return res
 
 
 api.add_resource(UseSignIn, "/api/v1/user/login")
