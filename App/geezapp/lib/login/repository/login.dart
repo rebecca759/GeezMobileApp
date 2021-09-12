@@ -27,14 +27,16 @@ class UserRepository {
     storage.deleteAll();
   }
 
-  Future<String> login(String phone, String password) async {
+  Future<String> login(String email, String password) async {
     Response response = await _dio.post(loginUrl, data: {
-      "email": phone,
+      "email": email,
       "password": password,
     });
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString('email', response.data["email"]);
+    print(response.data["email"]);
     sharedPreferences.setString("user_id", response.data["user_id"]);
+    print(response.data["user_id"]);
     sharedPreferences.setString("firstName", response.data["firstName"]);
 
     return response.data["user_id"];

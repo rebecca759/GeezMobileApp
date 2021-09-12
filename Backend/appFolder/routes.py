@@ -571,11 +571,11 @@ class GetAllUser(Resource):
         result = User.query.all()
         if result:
             json = {'email': result.email,
-    'firstName': result.firstName,
-    'secondName': result.secondName,
-    'password': result.password,
-    'userType': result.userType,
-    'photo': result.photo}
+                    'firstName': result.firstName,
+                    'secondName': result.secondName,
+                    'password': result.password,
+                    'userType': result.userType,
+                    'photo': result.photo}
             res.append(json)
             return result
         return res
@@ -605,6 +605,3 @@ api.add_resource(GetTeacherTest, "/api/v1/question/<int:id>")
 api.add_resource(PostTeacherTest, "/api/v1/question")
 api.add_resource(GetTest, "/api/v1/question/choice/<int:id>")
 api.add_resource(Exam, "/api/v1/exam")
-
-
-
